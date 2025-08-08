@@ -1,20 +1,42 @@
-import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MainApp());
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:tandem_ai/shared/themes/default_theme.dart';
+import 'routes/app_router.dart';
+
+
+void main() async {
+  const defaultTheme = DefaultTheme();
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
+  runApp(MainApp(defaultTheme: defaultTheme));
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+
+class MainApp extends StatefulWidget {
+  final DefaultTheme defaultTheme;
+
+  const MainApp({super.key, required this.defaultTheme});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp.router(
+      title: 'Best Dressed',
+      theme: widget.defaultTheme.light(),
+      themeMode: ThemeMode.light,
+      routerConfig: appRouter,
     );
   }
 }
