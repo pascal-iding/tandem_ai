@@ -76,5 +76,5 @@ class DefaultTheme {
 
 
 extension CustomColorScheme on ColorScheme {
-  Color get success => const Color.fromARGB(255, 57, 80, 59);
+  Color get success => const Color.fromARGB(255, 158, 200, 132);
 }

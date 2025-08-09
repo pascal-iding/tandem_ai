@@ -1,13 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 import '../widgets/scroll_indicator.dart';
-import '../widgets/chat_settings.dart';
+import '../widgets/chat_settings/chat_settings.dart';
 import '../widgets/ai_chat.dart';
 
 
 class ChatScreen extends StatefulWidget {
-
   const ChatScreen({super.key});
 
   @override
@@ -16,50 +16,58 @@ class ChatScreen extends StatefulWidget {
 
 
 class _ChatScreenState extends State<ChatScreen> {
-  late final PageController _controller;
+  final ScrollController _scrollController = ScrollController();
+  final double _scrollIndicatorHeight = 38;
+  bool _showScrollIndicator = true;
+  Timer? _scrollTimer;
   bool _isScrolling = false;
-  bool _isLastPage = false;
-  int _currentPage = 0;
-  final List<Widget> _pages = [
-    ChatSettings(),
-    AiChat()
-  ];
 
   @override
   void initState() {
     super.initState();
-    _controller = PageController(viewportFraction: 0.9);
-    
-    _controller.addListener(_onPageChanged);
-  }
-
-  void _onPageChanged() {
-    final page = _controller.page;
-    
-    if (page == null) {
-      return;
-    }
-
-    final currentPage = page.round();
-    final isLastPage = currentPage >= _pages.length - 1;
-    final isScrolling = (page - currentPage).abs() > 0.01;
-    
-    if (_currentPage != currentPage || 
-        _isLastPage != isLastPage || 
-        _isScrolling != isScrolling) {
-      setState(() {
-        _currentPage = currentPage;
-        _isLastPage = isLastPage;
-        _isScrolling = isScrolling;
-      });
-    }
+    _scrollController.addListener(_scrollListener);
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onPageChanged);
-    _controller.dispose();
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    _scrollTimer?.cancel();
     super.dispose();
+  }
+
+  /// Only show the scroll indicator when the user is not scrolling
+  /// and at the top of the page.
+  void _scrollListener() {
+    _scrollTimer?.cancel();
+    
+    if (!_isScrolling) {
+      _onScrollStart();
+    }
+    
+    _scrollTimer = Timer(const Duration(milliseconds: 100), () {
+      _onScrollEnd();
+    });
+  }
+
+  void _onScrollStart() {
+    setState(() {
+      _isScrolling = true;
+      _showScrollIndicator = false;
+    });
+  }
+
+  void _onScrollEnd() {
+    setState(() {
+      _isScrolling = false;
+      _showScrollIndicator = _isAtTop();
+    });
+  }
+
+  bool _isAtTop() {
+    if (!_scrollController.hasClients) return true;
+    
+    return _scrollController.offset <= 0.0;
   }
 
   @override
@@ -71,19 +79,21 @@ class _ChatScreenState extends State<ChatScreen> {
           
           return Stack(
             children: [
-              PageView.builder(
-                controller: _controller,
-                scrollDirection: Axis.vertical,
-                padEnds: false,
-                physics: const BouncingScrollPhysics(),
-                itemCount: _pages.length,
-                itemBuilder: (context, index) {
-                  return _pages[index];
-                },
+              SingleChildScrollView(
+                controller: _scrollController,
+                physics: const PageScrollPhysics(),
+                child: Column(
+                  children: [
+                    ChatSettings(
+                      maxHeight: stackHeight,
+                    ),
+                    AiChat(maxHeight: stackHeight)
+                  ]
+                ),
               ),
-              if (!_isScrolling && !_isLastPage)
+              if (_showScrollIndicator)
                 SizedBox(
-                  height: 0.9 * stackHeight + 38/2,
+                  height: 0.9 * stackHeight + _scrollIndicatorHeight/2,
                   width: double.infinity,
                   child: Align(
                     alignment: Alignment.bottomCenter,

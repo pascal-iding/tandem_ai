@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AiChat extends StatelessWidget {
-  const AiChat({super.key});
+  final double maxHeight;
+
+  const AiChat({super.key, required this.maxHeight});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      width: double.infinity,
+      height: maxHeight,
+      color: Colors.red,
+    );
   }
 }

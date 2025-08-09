@@ -33,7 +33,7 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Best Dressed',
+      title: 'Tandem Ai',
       theme: widget.defaultTheme.light(),
       themeMode: ThemeMode.light,
       routerConfig: appRouter,
