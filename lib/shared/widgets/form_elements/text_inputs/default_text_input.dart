@@ -9,6 +9,7 @@ class DefaultTextInput extends StatelessWidget {
   final String? topicIconPath;
   final TextEditingController controller;
   final bool isPassword;
+  final ValueChanged<String>? onChanged; // Add this parameter
 
   const DefaultTextInput({
     super.key,
@@ -17,6 +18,7 @@ class DefaultTextInput extends StatelessWidget {
     required this.controller,
     this.topicIconPath,
     this.isPassword = false,
+    this.onChanged, // Add this parameter
   });
 
   @override
@@ -52,6 +54,10 @@ class DefaultTextInput extends StatelessWidget {
                 child: TextFormField(
                   controller: controller,
                   obscureText: isPassword,
+                  onTapOutside: (event) {
+                    FocusScope.of(context).unfocus();
+                  },
+                  onChanged: onChanged,
                   style: Theme.of(context).textTheme.bodyMedium,
                   decoration: InputDecoration(
                     hintText: hint,

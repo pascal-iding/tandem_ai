@@ -1,10 +1,14 @@
 
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/scroll_indicator.dart';
 import '../widgets/chat_settings/chat_settings.dart';
 import '../widgets/ai_chat.dart';
+import '../../logic/cubit/chat_settings_cubit.dart';
+import '../../logic/cubit/chat_list_cubit.dart';
+import '../../data/models/chat_list.dart';
 
 
 class ChatScreen extends StatefulWidget {
@@ -36,8 +40,6 @@ class _ChatScreenState extends State<ChatScreen> {
     super.dispose();
   }
 
-  /// Only show the scroll indicator when the user is not scrolling
-  /// and at the top of the page.
   void _scrollListener() {
     _scrollTimer?.cancel();
     
@@ -76,31 +78,53 @@ class _ChatScreenState extends State<ChatScreen> {
       body: LayoutBuilder(
         builder: (context, constraints) {
           final stackHeight = constraints.maxHeight;
-          
-          return Stack(
-            children: [
-              SingleChildScrollView(
-                controller: _scrollController,
-                physics: const PageScrollPhysics(),
-                child: Column(
-                  children: [
-                    ChatSettings(
-                      maxHeight: stackHeight,
-                    ),
-                    AiChat(maxHeight: stackHeight)
-                  ]
-                ),
+
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<ChatSettingsCubit>(
+                create: (context) => ChatSettingsCubit(),
               ),
-              if (_showScrollIndicator)
-                SizedBox(
-                  height: 0.9 * stackHeight + _scrollIndicatorHeight/2,
-                  width: double.infinity,
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ScrollIndicator(),
-                  )
-                )
+              BlocProvider<ChatListCubit>(
+                create: (context) => ChatListCubit(),
+              ),
             ],
+            child: BlocBuilder<ChatListCubit, ChatList>(
+              builder: (context, chatListState) {
+                final hasChats = 
+                  (chatListState.chats.isNotEmpty) && 
+                  (chatListState.activeChatIndex != null);
+
+                if (!hasChats && _scrollController.hasClients) {
+                  _scrollController.jumpTo(0);
+                }
+
+                return Stack(
+                  children: [
+                    SingleChildScrollView(
+                      controller: _scrollController,
+                      physics: hasChats
+                          ? const PageScrollPhysics()
+                          : const NeverScrollableScrollPhysics(),
+                      child: Column(
+                        children: [
+                          ChatSettings(maxHeight: stackHeight),
+                          AiChat(maxHeight: stackHeight),
+                        ],
+                      ),
+                    ),
+                    if (_showScrollIndicator && hasChats)
+                      SizedBox(
+                        height: 0.9 * stackHeight + _scrollIndicatorHeight / 2,
+                        width: double.infinity,
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ScrollIndicator(),
+                        ),
+                      ),
+                  ],
+                );
+              },
+            ),
           );
         },
       ),
