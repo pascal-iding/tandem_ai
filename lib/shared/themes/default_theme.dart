@@ -15,7 +15,7 @@ class DefaultTheme {
     error: Color.fromARGB(255, 235, 93, 93),
     onError: Color.fromARGB(255, 255, 255, 255),
     onPrimary: Color.fromARGB(255, 255, 255, 255),
-    onSecondary: Color.fromARGB(255, 0, 0, 0),
+    onSecondary: Color.fromARGB(255, 255, 255, 255),
     onSurface: Color.fromARGB(255, 0, 0, 0),
     onSurfaceVariant: Color.fromARGB(255, 116, 116, 116),
     outline: Color.fromARGB(255, 0, 0, 0),
