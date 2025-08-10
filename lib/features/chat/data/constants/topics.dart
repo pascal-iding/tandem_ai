@@ -13,7 +13,7 @@ String getTopicName(Topic topic) {
     case Topic.business:
       return "Geschäftlich";
     case Topic.travel:
-      return "Reise";
+      return "Reisen";
     case Topic.food:
       return "Essen";
   }
@@ -33,7 +33,7 @@ Topic getTopic(String topic) {
       return Topic.leisure;
     case 'Geschäftlich':
       return Topic.business;
-    case 'travel':
+    case 'Reisen':
       return Topic.travel;
     case 'Essen':
       return Topic.food;

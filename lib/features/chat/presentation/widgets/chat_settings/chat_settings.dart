@@ -9,32 +9,22 @@ import './chat_settings_options.dart';
 import '../../../logic/cubit/chat_settings_cubit.dart';
 
 
-class ChatSettings extends StatefulWidget {
+class ChatSettings extends StatelessWidget {
   final double maxHeight;
+  final VoidCallback? onNewChat;
 
-  const ChatSettings({super.key, required this.maxHeight});
+  const ChatSettings({
+    super.key, 
+    required this.maxHeight,
+    this.onNewChat,
+  });
 
-  @override
-  State<ChatSettings> createState() => _ChatSettingsState();
-}
-
-class _ChatSettingsState extends State<ChatSettings> {
-  /// Disables the button after click for a second to make
-  /// the action feel more impactful.
-  bool isLoading = false;
-
-  void _onStartConversation() {
-    setState(() => isLoading = true);
-
+  void _onStartConversation(BuildContext context) {
     context.read<ChatListCubit>().addChat(
       context.read<ChatSettingsCubit>().state,
     );
-
-    Future.delayed(const Duration(seconds: 1), () {
-      if (mounted) {
-        setState(() => isLoading = false);
-      }
-    });
+    
+    onNewChat?.call();
   }
 
   @override
@@ -45,7 +35,7 @@ class _ChatSettingsState extends State<ChatSettings> {
 
     return Container(
       width: double.infinity,
-      height: widget.maxHeight * 0.9,
+      height: maxHeight * 0.9,
       padding: EdgeInsets.only(
         top: safeAreaPaddingTop + padding,
         left: padding,
@@ -75,8 +65,7 @@ class _ChatSettingsState extends State<ChatSettings> {
               const SizedBox(height: 8),
               DefaultFilledButton(
                 label: 'Neue Konversation starten',
-                isLoading: isLoading,
-                onPressed: isLoading ? () {} : _onStartConversation,
+                onPressed: () => _onStartConversation(context),
               )
             ])
           ]),

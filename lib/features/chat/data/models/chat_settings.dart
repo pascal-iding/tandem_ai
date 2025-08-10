@@ -30,4 +30,17 @@ class ChatSettings {
       level: level ?? this.level,
     );
   }
+
+  String getCityOfOrigin() {
+    switch (language) {
+      case Language.german:
+        return "Berlin";
+      case Language.english:
+        return "London";
+      case Language.spanish:
+        return "Madrid";
+      case Language.italian:
+        return "Rom";
+    }
+  }
 }

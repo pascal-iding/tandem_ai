@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/scroll_indicator.dart';
 import '../widgets/chat_settings/chat_settings.dart';
-import '../widgets/ai_chat.dart';
+import '../widgets/ai_chat/ai_chat.dart';
 import '../../logic/cubit/chat_settings_cubit.dart';
 import '../../logic/cubit/chat_list_cubit.dart';
 import '../../data/models/chat_list.dart';
@@ -72,6 +72,22 @@ class _ChatScreenState extends State<ChatScreen> {
     return _scrollController.offset <= 0.0;
   }
 
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Timer(const Duration(milliseconds: 300), () {
+          if (_scrollController.hasClients) {
+            _scrollController.animateTo(
+              _scrollController.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+          }
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,7 +123,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           : const NeverScrollableScrollPhysics(),
                       child: Column(
                         children: [
-                          ChatSettings(maxHeight: stackHeight),
+                          ChatSettings(
+                            maxHeight: stackHeight,
+                            onNewChat: _scrollToBottom,
+                          ),
                           AiChat(maxHeight: stackHeight),
                         ],
                       ),

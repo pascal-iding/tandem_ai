@@ -10,7 +10,11 @@ class ChatListCubit extends Cubit<ChatList> {
 
   void addChat(ChatSettings settings) {
     Persona randomPersona = Persona.random();
-    final newChat = Chat(messages: [], persona: randomPersona, settings: settings);
+    final newChat = Chat(
+      messages: [], 
+      persona: randomPersona, 
+      settings: settings,
+    );
 
     final updatedChats = [newChat, ...state.chats];
     emit(ChatList(chats: updatedChats)..activeChatIndex = 0);
@@ -33,15 +37,24 @@ class ChatListCubit extends Cubit<ChatList> {
   }
 
   void setActiveChat(int chatId) {
-    // Find index of chat with given id
     final index = state.chats.indexWhere((chat) => chat.id == chatId);
-    if (index == -1) return; // chat not found, do nothing
+    if (index == -1) return; 
 
-    // Keep chats unchanged, but update activeChatIndex
     emit(ChatList(
       chats: state.chats,
       activeChatIndex: index
     ));
+  }
+
+  Chat? getChat(int chatId) {
+    final index = state.chats.indexWhere((chat) => chat.id == chatId);
+    if (index == -1) return null; 
+    return state.chats[index];
+  }
+
+  Chat? getActiveChat() {
+    if (state.activeChatIndex == null) return null;
+    return state.chats[state.activeChatIndex!];
   }
 
   void addMessage(int chatIndex, Message message) {
@@ -51,7 +64,7 @@ class ChatListCubit extends Cubit<ChatList> {
     updatedChats[chatIndex] = Chat(
       messages: [...updatedChat.messages, message],
       persona: updatedChat.persona,
-      settings: state.chats[chatIndex].settings
+      settings: state.chats[chatIndex].settings,
     );
     emit(ChatList(chats: updatedChats));
   }
