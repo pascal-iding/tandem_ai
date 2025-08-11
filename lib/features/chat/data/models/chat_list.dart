@@ -52,6 +52,34 @@ class Chat {
 
   @override
   int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    final StringBuffer buffer = StringBuffer();
+    
+    buffer.writeln('Chat ID: $id');
+    buffer.writeln('Persona: ${persona.name.name} (${persona.personality})');
+    buffer.writeln('Messages (${messages.length}):');
+    buffer.writeln('=' * 50);
+    
+    for (int i = 0; i < messages.length; i++) {
+      final message = messages[i];
+      final authorName = message.author == MessageAuthor.user ? 'User' : 'AI';
+      final timestamp = '${message.date.hour.toString().padLeft(2, '0')}:${message.date.minute.toString().padLeft(2, '0')}';
+      
+      buffer.writeln('[$timestamp] $authorName: ${message.text}');
+      
+      if (message.feedback != null && message.feedback!.isNotEmpty) {
+        buffer.writeln('  └─ Feedback: ${message.feedback}');
+      }
+      
+      if (i < messages.length - 1) {
+        buffer.writeln();
+      }
+    }
+    
+    return buffer.toString();
+  }
 }
 
 

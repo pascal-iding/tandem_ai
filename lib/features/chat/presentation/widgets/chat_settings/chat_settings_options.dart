@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tandem_ai/features/chat/data/models/chat_list.dart';
 
 import 'package:tandem_ai/shared/widgets/form_elements/dropdowns/default_dropdown.dart';
-import 'package:tandem_ai/shared/widgets/form_elements/text_inputs/default_text_input.dart';
 import '../active_chat_list/active_chat_list.dart';
 import '../../../data/constants/languages.dart';
 import '../../../logic/cubit/chat_settings_cubit.dart';
@@ -34,18 +33,6 @@ class ChatSettingsOptions extends StatelessWidget {
                     }
                     return Container();
                   }
-                ),
-                const SizedBox(height: 11),
-                DefaultTextInput(
-                  title: 'Wie möchtest du genannt werden', 
-                  hint: chatSettings.name,
-                  controller: usernameController,
-                  onChanged: (value) {
-                    String filteredValue = value.replaceAll(RegExp(r'[^a-zA-ZäöüÄÖÜß\s]'), '');
-                    String nameToUpdate = filteredValue.trim().isEmpty ? 'Jonas' : filteredValue;
-                    context.read<ChatSettingsCubit>().updateName(nameToUpdate);
-                    if (filteredValue.trim().isNotEmpty) usernameController.text = nameToUpdate;
-                  },
                 ),
                 const SizedBox(height: 11),
                 DefaultDropdown(

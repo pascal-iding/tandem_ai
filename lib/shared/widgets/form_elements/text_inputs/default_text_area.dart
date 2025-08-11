@@ -7,6 +7,7 @@ class DefaultTextArea extends StatelessWidget {
   final String? topicIconPath;
   final TextEditingController? controller;
   final bool isPassword;
+  final bool isLoading;
   final ValueChanged<String>? onChanged;
   final VoidCallback? onSend;
 
@@ -17,6 +18,7 @@ class DefaultTextArea extends StatelessWidget {
     this.controller,
     this.topicIconPath,
     this.isPassword = false,
+    this.isLoading = false,
     this.onChanged,
     this.onSend,
   });
@@ -101,16 +103,25 @@ class DefaultTextArea extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: IconButton(
-              onPressed: onSend,
-              icon: SvgPicture.asset(
-                'assets/icons/send.svg',
-                width: 21,
-                height: 21,
-                colorFilter: ColorFilter.mode(
-                  Theme.of(context).colorScheme.primary,
-                  BlendMode.srcIn,
-                ),
-              ),
+              onPressed: isLoading ? null : onSend,
+              icon: isLoading
+                ? SizedBox(
+                    width: 21,
+                    height: 21,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  )
+                : SvgPicture.asset(
+                    'assets/icons/send.svg',
+                    width: 21,
+                    height: 21,
+                    colorFilter: ColorFilter.mode(
+                      Theme.of(context).colorScheme.primary,
+                      BlendMode.srcIn,
+                    ),
+                  ),
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
             ),

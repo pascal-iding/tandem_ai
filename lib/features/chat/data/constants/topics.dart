@@ -19,6 +19,19 @@ String getTopicName(Topic topic) {
   }
 }
 
+String getTopicNameEn(Topic topic) {
+  switch (topic) {
+    case Topic.leisure:
+      return "Leisure";
+    case Topic.business:
+      return "Business";
+    case Topic.travel:
+      return "Travel";
+    case Topic.food:
+      return "Food";
+  }
+}
+
 List<String> getTopicList() {
   return Topic.values.map((topic) => getTopicName(topic)).toList();
 }

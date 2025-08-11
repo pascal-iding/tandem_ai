@@ -58,7 +58,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
             child: Container(
               padding: EdgeInsets.only(
                   top: topSafeArea + 21, left: 21, right: 21, bottom: 21),
-              color: Theme.of(context).colorScheme.surface.withAlpha(150),
+              color: Theme.of(context).colorScheme.surface.withAlpha(220),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [

@@ -57,13 +57,13 @@ class ChatListCubit extends Cubit<ChatList> {
     return state.chats[state.activeChatIndex!];
   }
 
-  void addMessage(int chatId, Message message) {
+  void addMessages(int chatId, List<Message> messages) {
     final index = state.chats.indexWhere((chat) => chat.id == chatId);
     if (index == -1) return;
     final updatedChats = List<Chat>.from(state.chats);
     final updatedChat = updatedChats[index];
     updatedChats[index] = Chat(
-      messages: [...updatedChat.messages, message],
+      messages: [...updatedChat.messages, ...messages],
       persona: updatedChat.persona,
       settings: state.chats[index].settings,
     );

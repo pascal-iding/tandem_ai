@@ -19,6 +19,19 @@ String getLanguageName(Language language) {
   }
 }
 
+String getLanguageNameEn(Language language) {
+  switch (language) {
+    case Language.german:
+      return "German";
+    case Language.english:
+      return "English";
+    case Language.spanish:
+      return "Spanish";
+    case Language.italian:
+      return "Italian";
+  }
+}
+
 List<String> getLanguageList() {
   return Language.values.map((language) => getLanguageName(language)).toList();
 }

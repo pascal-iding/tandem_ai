@@ -25,6 +25,23 @@ String getLevelName(LanguageLevel level) {
   }
 }
 
+String getLevelNameEn(LanguageLevel level) {
+  switch (level) {
+    case LanguageLevel.a1:
+      return "A1 - Beginner";
+    case LanguageLevel.a2:
+      return "A2 - Beginner";
+    case LanguageLevel.b1:
+      return "B1 - Advanced";
+    case LanguageLevel.b2:
+      return "B2 - Advanced";
+    case LanguageLevel.c1:
+      return "C1 - Very advanced";
+    case LanguageLevel.c2:
+      return "C2 - Expert";
+  }
+}
+
 List<String> getLevelList() {
   return LanguageLevel.values.map((level) => getLevelName(level)).toList();
 }
