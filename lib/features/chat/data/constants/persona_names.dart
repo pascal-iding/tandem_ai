@@ -1,4 +1,3 @@
-
 enum PersonaName {
   sara,
   kevin,

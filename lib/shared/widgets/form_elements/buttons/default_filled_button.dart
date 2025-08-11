@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 
-
-class DefaultFilledButton extends StatefulWidget {
+class DefaultFilledButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
   final bool isLoading;
@@ -19,27 +17,20 @@ class DefaultFilledButton extends StatefulWidget {
   });
 
   @override
-  State<DefaultFilledButton> createState() => _DefaultFilledButtonState();
-}
-
-class _DefaultFilledButtonState extends State<DefaultFilledButton> {
-  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 53,
       child: FilledButton(
-        onPressed: widget.isLoading ? null : widget.onPressed,
+        onPressed: isLoading ? null : onPressed,
         style: FilledButton.styleFrom(
-          backgroundColor: widget.fillColor ?? Theme.of(context).primaryColor,
+          backgroundColor: fillColor ?? Theme.of(context).primaryColor,
           disabledBackgroundColor: Theme.of(context).primaryColor,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           alignment: Alignment.center,
         ),
-        child: widget.isLoading
+        child: isLoading
             ? SizedBox(
                 width: 20,
                 height: 20,
@@ -51,10 +42,9 @@ class _DefaultFilledButtonState extends State<DefaultFilledButton> {
                 ),
               )
             : Text(
-                widget.label,
+                label,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: widget.textColor ??
-                      Theme.of(context).colorScheme.onPrimary,
+                  color: textColor ?? Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
       ),

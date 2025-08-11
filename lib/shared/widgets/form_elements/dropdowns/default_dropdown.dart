@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 class DefaultDropdown extends StatelessWidget {
   final List<String> dropdownItems;
@@ -23,10 +21,7 @@ class DefaultDropdown extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
+        Text(title, style: Theme.of(context).textTheme.labelLarge),
         const SizedBox(height: 8),
         SizedBox(
           width: double.infinity,
@@ -35,26 +30,44 @@ class DefaultDropdown extends StatelessWidget {
             value: value,
             style: Theme.of(context).textTheme.bodyMedium,
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 14,
+              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface, width: 1),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.onSurface,
+                  width: 1,
+                ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface, width: 1),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.onSurface,
+                  width: 1,
+                ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface, width: 1),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.onSurface,
+                  width: 1,
+                ),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 1),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.error,
+                  width: 1,
+                ),
               ),
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 2),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.error,
+                  width: 2,
+                ),
               ),
             ),
             hint: Text(
@@ -74,7 +87,7 @@ class DefaultDropdown extends StatelessWidget {
             }).toList(),
             onChanged: onChanged,
           ),
-        )
+        ),
       ],
     );
   }

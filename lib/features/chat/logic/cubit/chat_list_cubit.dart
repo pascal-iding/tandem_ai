@@ -1,9 +1,7 @@
-
 import 'package:bloc/bloc.dart';
 
 import '../../data/models/chat_list.dart';
 import '../../data/models/chat_settings.dart';
-
 
 class ChatListCubit extends Cubit<ChatList> {
   ChatListCubit() : super(ChatList(chats: []));
@@ -11,8 +9,8 @@ class ChatListCubit extends Cubit<ChatList> {
   void addChat(ChatSettings settings) {
     Persona randomPersona = Persona.random();
     final newChat = Chat(
-      messages: [], 
-      persona: randomPersona, 
+      messages: [],
+      persona: randomPersona,
       settings: settings,
     );
 
@@ -38,17 +36,14 @@ class ChatListCubit extends Cubit<ChatList> {
 
   void setActiveChat(int chatId) {
     final index = state.chats.indexWhere((chat) => chat.id == chatId);
-    if (index == -1) return; 
+    if (index == -1) return;
 
-    emit(ChatList(
-      chats: state.chats,
-      activeChatIndex: index
-    ));
+    emit(ChatList(chats: state.chats, activeChatIndex: index));
   }
 
   Chat? getChat(int chatId) {
     final index = state.chats.indexWhere((chat) => chat.id == chatId);
-    if (index == -1) return null; 
+    if (index == -1) return null;
     return state.chats[index];
   }
 

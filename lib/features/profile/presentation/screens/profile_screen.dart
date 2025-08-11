@@ -6,7 +6,6 @@ import 'package:tandem_ai/shared/widgets/form_elements/text_inputs/default_text_
 import '../../../../shared/utils/api_key_repository.dart';
 import 'package:tandem_ai/shared/widgets/snackbar.dart' as tandem_ai;
 
-
 class ProfileScreen extends StatefulWidget {
   final String? errorMessage;
 
@@ -44,7 +43,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
     } catch (e) {
       if (mounted) {
-        tandem_ai.Snackbar.show(context, 'Ein unbekannter Fehler ist aufgetreten');
+        tandem_ai.Snackbar.show(
+          context,
+          'Ein unbekannter Fehler ist aufgetreten',
+        );
       }
     }
   }
@@ -55,10 +57,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         _initialKey = _apiKeyController.text;
       });
-      
+
       tandem_ai.Snackbar.show(context, 'Api Key gespeichert.');
     } catch (e) {
-      tandem_ai.Snackbar.show(context, 'Ein unbekannter Fehler ist aufgetreten.');
+      tandem_ai.Snackbar.show(
+        context,
+        'Ein unbekannter Fehler ist aufgetreten.',
+      );
     }
   }
 
@@ -72,41 +77,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
           top: paddingTop + 21,
           right: 21,
           left: 21,
-          bottom: 21
+          bottom: 21,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Header(
-              showBackButton: true,
-            ),
+            Header(showBackButton: true),
             const SizedBox(height: 21),
-            Text(
-              'Dein Profil',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            Text('Dein Profil', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 21),
             DefaultTextInput(
-              hint: 'Dein Api Key', 
+              hint: 'Dein Api Key',
               title: 'Api Key',
               controller: _apiKeyController,
               onChanged: (value) => setState(() {
                 _currentKey = value;
               }),
             ),
-            if (widget.errorMessage != null)
-              const SizedBox(height: 11),
+            if (widget.errorMessage != null) const SizedBox(height: 11),
             if (widget.errorMessage != null)
               ErrorMessage(errorMessage: widget.errorMessage!),
             const SizedBox(height: 11),
             if (_initialKey != _currentKey)
-              DefaultFilledButton(
-                label: 'Speichern', 
-                onPressed: _saveApiKey,
-              ),
-          ]
-        )
-      )
+              DefaultFilledButton(label: 'Speichern', onPressed: _saveApiKey),
+          ],
+        ),
+      ),
     );
   }
 }

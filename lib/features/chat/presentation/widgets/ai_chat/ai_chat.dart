@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -13,14 +12,13 @@ import 'package:tandem_ai/shared/widgets/form_elements/text_inputs/default_text_
 import '..//../../../data/repositories/chat_repository.dart';
 import 'package:tandem_ai/shared/widgets/snackbar.dart' as tandem_ai;
 
-
 class AiChat extends StatefulWidget {
   final double maxHeight;
   final double scrollOffset;
 
   const AiChat({
-    super.key, 
-    required this.maxHeight, 
+    super.key,
+    required this.maxHeight,
     required this.scrollOffset,
   });
 
@@ -31,10 +29,11 @@ class AiChat extends StatefulWidget {
 class _AiChatState extends State<AiChat> {
   late TextEditingController _textController;
   bool _isLoading = false;
-  ///Prevent endless loop if an exception occurs during onSend!
+
+  /// Prevent endless loop if an exception occurs during onSend!
   bool _initialMessageRequested = false;
   int _activeChatId = -1;
-  
+
   final double _fadeStartOffset = 0.0;
   final double _fadeEndOffset = 200.0;
 
@@ -54,30 +53,32 @@ class _AiChatState extends State<AiChat> {
     if (widget.scrollOffset <= _fadeStartOffset) {
       return 0.0;
     } else if (widget.scrollOffset >= _fadeEndOffset) {
-      return 1.0; // Fully opaque after scrolling enough
+      return 1.0;
     } else {
-      // Linear interpolation between 0 and 1
-      return (widget.scrollOffset - _fadeStartOffset) / 
-             (_fadeEndOffset - _fadeStartOffset);
+      return (widget.scrollOffset - _fadeStartOffset) /
+          (_fadeEndOffset - _fadeStartOffset);
     }
   }
 
-  void onSend({bool isInitialMessage=false}) async {
+  void onSend({bool isInitialMessage = false}) async {
     final Chat? activeChat = context.read<ChatListCubit>().getActiveChat();
     final String newMessage = _textController.text;
 
-    if (activeChat == null || newMessage.trim().isEmpty && !isInitialMessage) return;
+    if (activeChat == null || newMessage.trim().isEmpty && !isInitialMessage)
+      return;
 
     setState(() {
       _isLoading = true;
     });
 
     if (!isInitialMessage) {
-      context.read<ChatListCubit>().addMessages(activeChat.id, [Message(
-        author: MessageAuthor.user, 
-        text: _textController.text,
-        date: DateTime.now(),
-      )]);
+      context.read<ChatListCubit>().addMessages(activeChat.id, [
+        Message(
+          author: MessageAuthor.user,
+          text: _textController.text,
+          date: DateTime.now(),
+        ),
+      ]);
     }
 
     if (!mounted) return;
@@ -87,24 +88,32 @@ class _AiChatState extends State<AiChat> {
       final newActiveChat = context.read<ChatListCubit>().getActiveChat();
       final response = await ChatRepository.getAnswer(activeChat, newMessage);
       if (!mounted || newActiveChat == null) return;
-      
-      context.read<ChatListCubit>().addMessages(newActiveChat.id, [Message(
-        author: MessageAuthor.ai, 
-        text: response.text, 
-        date: DateTime.now(), 
-        feedback: response.feedback
-      )]);
+
+      context.read<ChatListCubit>().addMessages(newActiveChat.id, [
+        Message(
+          author: MessageAuthor.ai,
+          text: response.text,
+          date: DateTime.now(),
+          feedback: response.feedback,
+        ),
+      ]);
     } catch (e) {
       if (e is ApiKeyException) {
-        tandem_ai.Snackbar.show(context, 'Api Key konnte nicht geladen werden.');
+        tandem_ai.Snackbar.show(
+          context,
+          'Api Key konnte nicht geladen werden.',
+        );
         return;
       } else if (e is UnauthorizedException) {
         if (mounted) {
-          context.push('/profile?errorMessage="Dein Api Key ist ungültig."');
+          context.push('/profile?errorMessage=Dein Api Key ist ungültig.');
           return;
         }
       } else {
-        tandem_ai.Snackbar.show(context, 'Bitte überprüfe deine Internetverbindung.');
+        tandem_ai.Snackbar.show(
+          context,
+          'Bitte überprüfe deine Internetverbindung.',
+        );
         return;
       }
     } finally {
@@ -131,11 +140,10 @@ class _AiChatState extends State<AiChat> {
       });
     }
 
-    bool shouldRequestInitialMessage = 
-      !_initialMessageRequested 
-      && activeChat != null 
-      && activeChat.messages.isEmpty
-    ;
+    bool shouldRequestInitialMessage =
+        !_initialMessageRequested &&
+        activeChat != null &&
+        activeChat.messages.isEmpty;
 
     if (shouldRequestInitialMessage) {
       setState(() {
@@ -162,34 +170,31 @@ class _AiChatState extends State<AiChat> {
           fit: BoxFit.cover,
         ),
       ),
-      child: activeChat != null 
-        ? Column(
-          children: [
-            Opacity(
-              opacity: headerOpacity,
-              child: Header(),
-            ),
-            const SizedBox(height: 11),
-            Expanded(
-              child: ChatHistory(),
-            ),
-            const SizedBox(height: 11),
-            Padding(
-              padding: EdgeInsets.only(
-                left: 21, 
-                right: 21, 
-                bottom: padding.bottom + 21,
-              ),
-              child: DefaultTextArea(
-                hint: 'Deine Nachricht ...', 
-                controller: _textController,
-                isLoading: _isLoading,
-                onSend: () { onSend(); },
-              ),
-            ),
-          ],
-        )
-      : null,
+      child: activeChat != null
+          ? Column(
+              children: [
+                Opacity(opacity: headerOpacity, child: Header()),
+                const SizedBox(height: 11),
+                Expanded(child: ChatHistory()),
+                const SizedBox(height: 11),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 21,
+                    right: 21,
+                    bottom: padding.bottom + 21,
+                  ),
+                  child: DefaultTextArea(
+                    hint: 'Deine Nachricht ...',
+                    controller: _textController,
+                    isLoading: _isLoading,
+                    onSend: () {
+                      onSend();
+                    },
+                  ),
+                ),
+              ],
+            )
+          : null,
     );
   }
 }

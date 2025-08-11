@@ -1,5 +1,1 @@
-
-enum MessageAuthor {
-  user,
-  ai
-}
+enum MessageAuthor { user, ai }

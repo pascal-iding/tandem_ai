@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:tandem_ai/shared/themes/default_theme.dart';
-
 
 class ActiveIndicator extends StatefulWidget {
   const ActiveIndicator({super.key});
@@ -19,25 +17,28 @@ class _ActiveIndicatorState extends State<ActiveIndicator>
   @override
   void initState() {
     super.initState();
-    
+
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
 
-    _scaleAnimation = TweenSequence<double>([
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 0.0, end: 1.5),
-        weight: 50,
-      ),
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 1.5, end: 1.0),
-        weight: 50,
-      ),
-    ]).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
+    _scaleAnimation =
+        TweenSequence<double>([
+          TweenSequenceItem(
+            tween: Tween<double>(begin: 0.0, end: 1.5),
+            weight: 50,
+          ),
+          TweenSequenceItem(
+            tween: Tween<double>(begin: 1.5, end: 1.0),
+            weight: 50,
+          ),
+        ]).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        );
 
     _animationController.forward();
   }

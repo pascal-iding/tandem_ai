@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 class ErrorMessage extends StatelessWidget {
   final String errorMessage;
@@ -13,14 +11,14 @@ class ErrorMessage extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.red.shade50,
+        color: Theme.of(context).colorScheme.errorContainer,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.red.shade200),
+        border: Border.all(color: Theme.of(context).colorScheme.error),
       ),
       child: Text(
         errorMessage,
         style: TextStyle(
-          color: Colors.red.shade700,
+          color: Theme.of(context).colorScheme.onErrorContainer,
           fontSize: 14,
         ),
       ),

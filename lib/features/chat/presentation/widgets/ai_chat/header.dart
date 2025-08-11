@@ -19,20 +19,16 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    
+
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeIn,
-    ));
-    
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
+    );
+
     // Start the animation when the widget is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _animationController.forward();
@@ -57,7 +53,11 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
             opacity: _fadeAnimation,
             child: Container(
               padding: EdgeInsets.only(
-                  top: topSafeArea + 21, left: 21, right: 21, bottom: 21),
+                top: topSafeArea + 21,
+                left: 21,
+                right: 21,
+                bottom: 21,
+              ),
               color: Theme.of(context).colorScheme.surface.withAlpha(220),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -68,8 +68,9 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       image: DecorationImage(
-                          image: AssetImage(activeChat.persona.picturePath),
-                          fit: BoxFit.cover),
+                        image: AssetImage(activeChat.persona.picturePath),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -86,21 +87,17 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           const SizedBox(width: 8),
-                          ActiveIndicator()
+                          ActiveIndicator(),
                         ],
                       ),
                       Text(
                         'From ${activeChat.settings.getCityOfOrigin()}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSurfaceVariant),
-                      )
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

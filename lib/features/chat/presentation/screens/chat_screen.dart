@@ -35,39 +35,36 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _onScroll() {
-    if (mounted) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          setState(() {
-            _scrollOffset = _scrollController.offset;
-          });
-        }
-      });
-    }
+    if (!mounted) return;
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          _scrollOffset = _scrollController.offset;
+        });
+      }
+    });
   }
 
   void _onScrollStart() {
-    if (mounted) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          setState(() {
-            _showScrollIndicator = false;
-          });
-        }
-      });
-    }
+    if (!mounted) return;
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          _showScrollIndicator = false;
+        });
+      }
+    });
   }
 
   void _onScrollEnd() {
-    if (mounted) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          setState(() {
-            _showScrollIndicator = _isAtTop();
-          });
-        }
-      });
-    }
+    if (!mounted) return;
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          _showScrollIndicator = _isAtTop();
+        });
+      }
+    });
   }
 
   bool _isAtTop() {
@@ -76,19 +73,18 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _scrollToBottom() {
-    if (_scrollController.hasClients) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Future.delayed(const Duration(milliseconds: 300), () {
-          if (_scrollController.hasClients) {
-            _scrollController.animateTo(
-              _scrollController.position.maxScrollExtent,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInOut,
-            );
-          }
-        });
+    if (!_scrollController.hasClients) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+        }
       });
-    }
+    });
   }
 
   @override
@@ -103,13 +99,12 @@ class _ChatScreenState extends State<ChatScreen> {
               BlocProvider<ChatSettingsCubit>(
                 create: (context) => ChatSettingsCubit(),
               ),
-              BlocProvider<ChatListCubit>(
-                create: (context) => ChatListCubit(),
-              ),
+              BlocProvider<ChatListCubit>(create: (context) => ChatListCubit()),
             ],
             child: BlocBuilder<ChatListCubit, ChatList>(
               builder: (context, chatListState) {
-                final hasChats = chatListState.chats.isNotEmpty &&
+                final hasChats =
+                    chatListState.chats.isNotEmpty &&
                     chatListState.activeChatIndex != null;
 
                 if (!hasChats && _scrollController.hasClients) {
@@ -147,7 +142,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       if (_showScrollIndicator && hasChats)
                         SizedBox(
-                          height: 0.9 * stackHeight + _scrollIndicatorHeight / 2,
+                          height:
+                              0.9 * stackHeight + _scrollIndicatorHeight / 2,
                           width: double.infinity,
                           child: Align(
                             alignment: Alignment.bottomCenter,

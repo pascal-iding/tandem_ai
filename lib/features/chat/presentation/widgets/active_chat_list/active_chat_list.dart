@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,14 +5,12 @@ import './active_chat_entry.dart';
 import '../../../data/models/chat_list.dart';
 import '../../../logic/cubit/chat_list_cubit.dart';
 
-
 class ActiveChatList extends StatefulWidget {
   const ActiveChatList({super.key});
 
   @override
   State<ActiveChatList> createState() => _ActiveChatListState();
 }
-
 
 class _ActiveChatListState extends State<ActiveChatList>
     with SingleTickerProviderStateMixin {
@@ -30,22 +27,18 @@ class _ActiveChatListState extends State<ActiveChatList>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(-1.0, 0.0),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOutCubic,
-    ));
 
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(-1.0, 0.0), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeOutCubic,
+          ),
+        );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
   }
 
   @override
@@ -72,7 +65,8 @@ class _ActiveChatListState extends State<ActiveChatList>
       height: 69 + 5 + 8 + 16,
       child: BlocListener<ChatListCubit, ChatList>(
         listener: (context, state) {
-          if (_previousChatsLength == null || state.chats.length > _previousChatsLength!) {
+          if (_previousChatsLength == null ||
+              state.chats.length > _previousChatsLength!) {
             _animateNewFirstElement();
           }
           _previousChatsLength = state.chats.length;

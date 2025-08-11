@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 
 import '../../data/models/chat_settings.dart';
@@ -6,15 +5,16 @@ import '../../data/constants/language_level.dart';
 import '../../data/constants/languages.dart';
 import '../../data/constants/topics.dart';
 
-
 class ChatSettingsCubit extends Cubit<ChatSettings> {
   ChatSettingsCubit()
-      : super(ChatSettings(
+    : super(
+        ChatSettings(
           name: 'Jonas',
-          topic: getTopic(getDefaultTopic()),
-          language: getLanguage(getDefaultLanguage()),
-          level: getLevel(getDefaultLevel()),
-        ));
+          topic: Topic.fromString(Topic.defaultTopic),
+          language: Language.fromString(Language.defaultLanguage),
+          level: LanguageLevel.fromString(LanguageLevel.defaultLevel),
+        ),
+      );
 
   void updateName(String name) {
     emit(state.copyWith(name: name));
@@ -38,20 +38,24 @@ class ChatSettingsCubit extends Cubit<ChatSettings> {
     Language? language,
     LanguageLevel? level,
   }) {
-    emit(state.copyWith(
-      name: name,
-      topic: topic,
-      language: language,
-      level: level,
-    ));
+    emit(
+      state.copyWith(
+        name: name,
+        topic: topic,
+        language: language,
+        level: level,
+      ),
+    );
   }
 
   void reset() {
-    emit(ChatSettings(
-      name: 'Jonas',
-      topic: getTopic(getDefaultTopic()),
-      language: getLanguage(getDefaultLanguage()),
-      level: getLevel(getDefaultLevel()),
-    ));
+    emit(
+      ChatSettings(
+        name: 'Jonas',
+        topic: Topic.fromString(Topic.defaultTopic),
+        language: Language.fromString(Language.defaultLanguage),
+        level: LanguageLevel.fromString(LanguageLevel.defaultLevel),
+      ),
+    );
   }
 }

@@ -1,23 +1,18 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:tandem_ai/shared/themes/default_theme.dart';
 import 'routes/app_router.dart';
 
-
 void main() async {
   const defaultTheme = DefaultTheme();
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(MainApp(defaultTheme: defaultTheme));
 }
-
 
 class MainApp extends StatefulWidget {
   final DefaultTheme defaultTheme;
@@ -29,7 +24,6 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

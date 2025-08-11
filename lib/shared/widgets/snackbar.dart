@@ -29,7 +29,7 @@ class Snackbar {
       behavior: SnackBarBehavior.floating,
       margin: const EdgeInsets.all(16.0),
     );
-    
+
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

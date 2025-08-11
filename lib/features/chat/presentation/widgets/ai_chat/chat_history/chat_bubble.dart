@@ -10,7 +10,7 @@ class ChatBubble extends StatefulWidget {
   final bool isUserMessage;
 
   const ChatBubble({
-    super.key, 
+    super.key,
     required this.message,
     required this.date,
     this.correctedMessage,
@@ -21,7 +21,8 @@ class ChatBubble extends StatefulWidget {
   State<ChatBubble> createState() => _ChatBubbleState();
 }
 
-class _ChatBubbleState extends State<ChatBubble> with SingleTickerProviderStateMixin {
+class _ChatBubbleState extends State<ChatBubble>
+    with SingleTickerProviderStateMixin {
   bool _showCorrectedMessage = false;
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
@@ -30,32 +31,24 @@ class _ChatBubbleState extends State<ChatBubble> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    
-    // Initialize animation controller
+
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 600),
       vsync: this,
     );
-    
-    // Create slide animation (from bottom)
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.5), // Start slightly below
-      end: Offset.zero, // End at normal position
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOutCubic,
-    ));
-    
-    // Create fade animation
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOut,
-    ));
-    
-    // Start animation when widget is created
+
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.5), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeOutCubic,
+          ),
+        );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
+    );
+
     _animationController.forward();
   }
 
@@ -83,7 +76,9 @@ class _ChatBubbleState extends State<ChatBubble> with SingleTickerProviderStateM
           children: [
             Expanded(
               child: Column(
-                crossAxisAlignment: widget.isUserMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                crossAxisAlignment: widget.isUserMessage
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
                 children: [
                   ConstrainedBox(
                     constraints: BoxConstraints(
@@ -98,26 +93,45 @@ class _ChatBubbleState extends State<ChatBubble> with SingleTickerProviderStateM
                           child: Container(
                             padding: EdgeInsets.all(21),
                             decoration: BoxDecoration(
-                              color: (widget.isUserMessage || _showCorrectedMessage)
-                                ? Theme.of(context).colorScheme.surface.withAlpha(170)
-                                : Theme.of(context).colorScheme.secondary.withAlpha(170),
+                              color:
+                                  (widget.isUserMessage ||
+                                      _showCorrectedMessage)
+                                  ? Theme.of(
+                                      context,
+                                    ).colorScheme.surface.withAlpha(170)
+                                  : Theme.of(
+                                      context,
+                                    ).colorScheme.secondary.withAlpha(170),
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: (widget.isUserMessage || _showCorrectedMessage)
-                                  ? Theme.of(context).colorScheme.onSurface.withAlpha(30)
-                                  : Theme.of(context).colorScheme.onSecondary.withAlpha(30),
+                                color:
+                                    (widget.isUserMessage ||
+                                        _showCorrectedMessage)
+                                    ? Theme.of(
+                                        context,
+                                      ).colorScheme.onSurface.withAlpha(30)
+                                    : Theme.of(
+                                        context,
+                                      ).colorScheme.onSecondary.withAlpha(30),
                                 width: 1,
                               ),
                             ),
                             child: Text(
-                              _showCorrectedMessage && widget.correctedMessage != null
-                                ? widget.correctedMessage!
-                                : widget.message,
-                              style: (widget.isUserMessage || _showCorrectedMessage)
-                                ? Theme.of(context).textTheme.bodyMedium
-                                : Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSecondary
-                                ),
+                              _showCorrectedMessage &&
+                                      widget.correctedMessage != null
+                                  ? widget.correctedMessage!
+                                  : widget.message,
+                              style:
+                                  (widget.isUserMessage ||
+                                      _showCorrectedMessage)
+                                  ? Theme.of(context).textTheme.bodyMedium
+                                  : Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium?.copyWith(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSecondary,
+                                    ),
                             ),
                           ),
                         ),
@@ -126,7 +140,9 @@ class _ChatBubbleState extends State<ChatBubble> with SingleTickerProviderStateM
                   ),
                   const SizedBox(height: 5),
                   Row(
-                    mainAxisAlignment: widget.isUserMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+                    mainAxisAlignment: widget.isUserMessage
+                        ? MainAxisAlignment.end
+                        : MainAxisAlignment.start,
                     children: [
                       if (widget.correctedMessage != null)
                         ClipRRect(
@@ -140,21 +156,31 @@ class _ChatBubbleState extends State<ChatBubble> with SingleTickerProviderStateM
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 color: widget.isUserMessage
-                                  ? Theme.of(context).colorScheme.surface.withAlpha(170)
-                                  : Theme.of(context).colorScheme.secondary.withAlpha(170),
+                                    ? Theme.of(
+                                        context,
+                                      ).colorScheme.surface.withAlpha(170)
+                                    : Theme.of(
+                                        context,
+                                      ).colorScheme.secondary.withAlpha(170),
                                 border: Border.all(
                                   color: widget.isUserMessage
-                                    ? Theme.of(context).colorScheme.onSurface.withAlpha(30)
-                                    : Theme.of(context).colorScheme.onSecondary.withAlpha(30),
+                                      ? Theme.of(
+                                          context,
+                                        ).colorScheme.onSurface.withAlpha(30)
+                                      : Theme.of(
+                                          context,
+                                        ).colorScheme.onSecondary.withAlpha(30),
                                   width: 1,
                                 ),
                               ),
                               child: SvgPicture.asset(
                                 'assets/icons/info.svg',
                                 colorFilter: ColorFilter.mode(
-                                  widget.isUserMessage 
-                                    ? Theme.of(context).colorScheme.onSurface
-                                    : Theme.of(context).colorScheme.onSecondary,
+                                  widget.isUserMessage
+                                      ? Theme.of(context).colorScheme.onSurface
+                                      : Theme.of(
+                                          context,
+                                        ).colorScheme.onSecondary,
                                   BlendMode.srcIn,
                                 ),
                               ),
@@ -170,36 +196,53 @@ class _ChatBubbleState extends State<ChatBubble> with SingleTickerProviderStateM
                           child: Container(
                             height: 23,
                             alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: widget.isUserMessage
-                                ? Theme.of(context).colorScheme.surface.withAlpha(170)
-                                : Theme.of(context).colorScheme.secondary.withAlpha(170),
+                                  ? Theme.of(
+                                      context,
+                                    ).colorScheme.surface.withAlpha(170)
+                                  : Theme.of(
+                                      context,
+                                    ).colorScheme.secondary.withAlpha(170),
                               border: Border.all(
                                 color: widget.isUserMessage
-                                  ? Theme.of(context).colorScheme.onSurface.withAlpha(30)
-                                  : Theme.of(context).colorScheme.onSecondary.withAlpha(30),
+                                    ? Theme.of(
+                                        context,
+                                      ).colorScheme.onSurface.withAlpha(30)
+                                    : Theme.of(
+                                        context,
+                                      ).colorScheme.onSecondary.withAlpha(30),
                                 width: 1,
                               ),
                             ),
                             child: Text(
-                              DateFormat('dd.MM.yyyy HH:mm').format(widget.date),
-                              style: widget.isUserMessage 
-                                ? Theme.of(context).textTheme.bodySmall
-                                : Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSecondary
-                                ),
+                              DateFormat(
+                                'dd.MM.yyyy HH:mm',
+                              ).format(widget.date),
+                              style: widget.isUserMessage
+                                  ? Theme.of(context).textTheme.bodySmall
+                                  : Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall?.copyWith(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSecondary,
+                                    ),
                             ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8)
+                  const SizedBox(height: 8),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

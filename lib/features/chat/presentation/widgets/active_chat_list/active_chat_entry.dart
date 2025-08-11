@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +7,6 @@ import '../../../logic/cubit/chat_list_cubit.dart';
 import '../../../logic/cubit/chat_settings_cubit.dart';
 import './active_indicator.dart';
 
-
 class ActiveChatEntry extends StatefulWidget {
   final int chatId;
   final String profilePicturePath;
@@ -16,11 +14,11 @@ class ActiveChatEntry extends StatefulWidget {
   final bool isActive;
 
   const ActiveChatEntry({
-    super.key, 
+    super.key,
     required this.chatId,
-    required this.profilePicturePath, 
-    required this.name, 
-    this.isActive = false
+    required this.profilePicturePath,
+    required this.name,
+    this.isActive = false,
   });
 
   @override
@@ -40,13 +38,9 @@ class _ActiveChatEntryState extends State<ActiveChatEntry>
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.3,
-    ).animate(CurvedAnimation(
-      parent: _scaleController,
-      curve: Curves.elasticOut,
-    ));
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.3).animate(
+      CurvedAnimation(parent: _scaleController, curve: Curves.elasticOut),
+    );
   }
 
   @override
@@ -61,7 +55,7 @@ class _ActiveChatEntryState extends State<ActiveChatEntry>
         _isScaled = true;
       });
       _scaleController.forward();
-      
+
       Future.delayed(const Duration(seconds: 2), () {
         if (mounted && _isScaled) {
           setState(() {
@@ -86,7 +80,7 @@ class _ActiveChatEntryState extends State<ActiveChatEntry>
           name: chat.settings.name,
           topic: chat.settings.topic,
           language: chat.settings.language,
-          level: chat.settings.level
+          level: chat.settings.level,
         );
       },
       child: Column(
@@ -121,9 +115,9 @@ class _ActiveChatEntryState extends State<ActiveChatEntry>
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: _isScaled 
-                              ? Theme.of(context).colorScheme.error
-                              : Theme.of(context).colorScheme.primary,
+                            color: _isScaled
+                                ? Theme.of(context).colorScheme.error
+                                : Theme.of(context).colorScheme.primary,
                           ),
                           child: SvgPicture.asset(
                             'assets/icons/x.svg',
@@ -139,11 +133,7 @@ class _ActiveChatEntryState extends State<ActiveChatEntry>
                 ),
               ),
               if (widget.isActive)
-                Positioned(
-                  right: 5,
-                  bottom: 5,
-                  child: ActiveIndicator()
-                )
+                Positioned(right: 5, bottom: 5, child: ActiveIndicator()),
             ],
           ),
           const SizedBox(height: 8),
@@ -154,7 +144,7 @@ class _ActiveChatEntryState extends State<ActiveChatEntry>
               style: Theme.of(context).textTheme.bodyMedium,
               overflow: TextOverflow.ellipsis,
             ),
-          )
+          ),
         ],
       ),
     );

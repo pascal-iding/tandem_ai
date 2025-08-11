@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -21,7 +20,7 @@ class DefaultOutlinedButton extends StatelessWidget {
     this.iconLeftPath,
     this.textColor = Colors.black,
     this.borderColor = Colors.black,
-    this.borderWidth = 2
+    this.borderWidth = 2,
   });
 
   @override
@@ -34,37 +33,25 @@ class DefaultOutlinedButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
           side: BorderSide(color: borderColor, width: borderWidth),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           alignment: Alignment.center,
         ),
         child: Stack(
           alignment: Alignment.center,
           children: [
             Align(
-              alignment: textAlign, // your custom alignment
+              alignment: textAlign,
               child: Text(
                 label,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: textColor,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(color: textColor),
               ),
             ),
             if (iconRightPath != null)
-              Positioned(
-                right: 12,
-                child: SvgPicture.asset(
-                  iconRightPath!
-                )
-              ),
+              Positioned(right: 12, child: SvgPicture.asset(iconRightPath!)),
             if (iconLeftPath != null)
-              Positioned(
-                left: 12,
-                child: SvgPicture.asset(
-                  iconLeftPath!
-                )
-              ),
+              Positioned(left: 12, child: SvgPicture.asset(iconLeftPath!)),
           ],
         ),
       ),

@@ -1,9 +1,6 @@
-
 import "package:flutter/material.dart";
 
-
 class DefaultTheme {
-  
   const DefaultTheme();
 
   ColorScheme colorSchemeLight() => const ColorScheme(
@@ -12,7 +9,9 @@ class DefaultTheme {
     surface: Color.fromARGB(255, 255, 255, 255),
     surfaceContainer: Color.fromARGB(255, 255, 255, 255),
     secondaryContainer: Color.fromARGB(255, 193, 182, 189),
-    error: Color.fromARGB(255, 235, 93, 93),
+    error: Color.fromARGB(255, 239, 154, 154),
+    errorContainer: Color.fromARGB(255, 255, 235, 238),
+    onErrorContainer: Color.fromARGB(255, 211, 47, 47),
     onError: Color.fromARGB(255, 255, 255, 255),
     onPrimary: Color.fromARGB(255, 255, 255, 255),
     onSecondary: Color.fromARGB(255, 255, 255, 255),
@@ -73,7 +72,6 @@ class DefaultTheme {
     dividerColor: colorScheme.onSurfaceVariant,
   );
 }
-
 
 extension CustomColorScheme on ColorScheme {
   Color get success => const Color.fromARGB(255, 158, 200, 132);

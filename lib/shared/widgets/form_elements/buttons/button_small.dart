@@ -1,18 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
-class ButtonSmall extends StatefulWidget {
+class ButtonSmall extends StatelessWidget {
   final String iconPath;
   final VoidCallback onPressed;
-  const ButtonSmall({super.key, required this.iconPath, required this.onPressed});
 
-  @override
-  State<ButtonSmall> createState() => _ButtonSmallState();
-}
+  const ButtonSmall({
+    super.key,
+    required this.iconPath,
+    required this.onPressed,
+  });
 
-class _ButtonSmallState extends State<ButtonSmall> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,17 +28,9 @@ class _ButtonSmallState extends State<ButtonSmall> {
         ],
       ),
       child: IconButton(
-        icon: SvgPicture.asset(
-          widget.iconPath,
-          width: 24,
-          height: 24,
-          // colorFilter: ColorFilter.mode(
-          //   Theme.of(context).colorScheme.onSurface,
-          //   BlendMode.srcIn,
-          // ),
-        ),
-        onPressed: widget.onPressed
-      )
+        icon: SvgPicture.asset(iconPath, width: 24, height: 24),
+        onPressed: onPressed,
+      ),
     );
   }
 }
