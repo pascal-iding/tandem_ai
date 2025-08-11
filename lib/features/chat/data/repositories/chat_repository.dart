@@ -18,10 +18,10 @@ class ChatRepository {
     }
 
     final String instructions =
-        'You are talking to a language learner. Strictly only answer in the following language: ${chat.settings.language.nameEn}.'
+        'You are talking to a language learner.'
         'Keep your answer under 70 words (or about 2 sentences).'
-        'Do not answer in a different language, even if the user talks in another language, except when'
-        ' the user asks a language related question and neeps help, you may answer in the other language.'
+        'Do answer in ${chat.settings.language.nameEn}, even if the user talks in another language, except when'
+        ' the user asks for help with grammar or vocabulary in another language. Then you may answer in the other language.'
         'But afterwards talk in the actual ${chat.settings.language.nameEn} language again.'
         'Try to start the conversation with an interesting and unique opening question.'
         'Your personality is as following: ${chat.persona.personality}.'

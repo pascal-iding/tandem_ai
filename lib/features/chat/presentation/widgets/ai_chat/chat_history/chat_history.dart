@@ -23,10 +23,16 @@ class _ChatHistoryState extends State<ChatHistory> {
     super.dispose();
   }
 
-  void scrollToBottom() {
-    if (_scrollController.hasClients) {
+  void scrollToBottom({bool forceJump = false}) {
+    if (!_scrollController.hasClients) return;
+
+    final position = _scrollController.position;
+    final offsetFromBottom = position.maxScrollExtent - position.pixels;
+    if (forceJump || offsetFromBottom > position.viewportDimension * 2) {
+      _scrollController.jumpTo(position.maxScrollExtent);
+    } else {
       _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
+        position.maxScrollExtent,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
@@ -41,7 +47,9 @@ class _ChatHistoryState extends State<ChatHistory> {
         activeChat.messages.length > _previousMessageCount) {
       _previousMessageCount = activeChat.messages.length;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        scrollToBottom();
+        Future.delayed(const Duration(milliseconds: 50), () {
+          scrollToBottom();
+        });
       });
     }
 

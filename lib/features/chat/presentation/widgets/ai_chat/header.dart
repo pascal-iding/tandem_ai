@@ -29,7 +29,6 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
       CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
 
-    // Start the animation when the widget is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _animationController.forward();
     });
@@ -91,7 +90,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                         ],
                       ),
                       Text(
-                        'From ${activeChat.settings.getCityOfOrigin()}',
+                        'Lebt in ${activeChat.settings.getCityOfOrigin()}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),

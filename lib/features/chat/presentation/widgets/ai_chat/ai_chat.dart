@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tandem_ai/features/chat/data/constants/languages.dart';
 import 'package:tandem_ai/features/chat/data/constants/message_author.dart';
 import 'package:tandem_ai/features/chat/data/models/chat_list.dart';
 
@@ -64,8 +65,9 @@ class _AiChatState extends State<AiChat> {
     final Chat? activeChat = context.read<ChatListCubit>().getActiveChat();
     final String newMessage = _textController.text;
 
-    if (activeChat == null || newMessage.trim().isEmpty && !isInitialMessage)
+    if (activeChat == null || newMessage.trim().isEmpty && !isInitialMessage) {
       return;
+    }
 
     setState(() {
       _isLoading = true;
@@ -153,6 +155,26 @@ class _AiChatState extends State<AiChat> {
     }
   }
 
+  String _getBackgroundImagePath() {
+    final Language? language = context
+        .read<ChatListCubit>()
+        .getActiveChat()
+        ?.settings
+        .language;
+    if (language == null) return 'assets/images/language_backgrounds/spain.jpg';
+
+    switch (language) {
+      case Language.german:
+        return 'assets/images/language_backgrounds/germany.jpg';
+      case Language.english:
+        return 'assets/images/language_backgrounds/england.jpg';
+      case Language.spanish:
+        return 'assets/images/language_backgrounds/spain.jpg';
+      case Language.italian:
+        return 'assets/images/language_backgrounds/italy.jpg';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Chat? activeChat = context.read<ChatListCubit>().getActiveChat();
@@ -164,9 +186,9 @@ class _AiChatState extends State<AiChat> {
     return Container(
       width: double.infinity,
       height: widget.maxHeight,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/language_backgrounds/spain.jpg'),
+          image: AssetImage(_getBackgroundImagePath()),
           fit: BoxFit.cover,
         ),
       ),

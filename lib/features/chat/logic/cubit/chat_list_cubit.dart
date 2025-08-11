@@ -7,7 +7,10 @@ class ChatListCubit extends Cubit<ChatList> {
   ChatListCubit() : super(ChatList(chats: []));
 
   void addChat(ChatSettings settings) {
-    Persona randomPersona = Persona.random();
+    Persona randomPersona = Persona.randomUnique(
+      state.chats.map((chat) => chat.persona).toList(),
+    );
+
     final newChat = Chat(
       messages: [],
       persona: randomPersona,

@@ -37,6 +37,7 @@ class ChatSettingsOptions extends StatelessWidget {
                   title: 'Worüber möchtest du reden',
                   hint: chatSettings.topic.name,
                   dropdownItems: Topic.topicList,
+                  value: chatSettings.topic.name,
                   onChanged: (topic) =>
                       context.read<ChatSettingsCubit>().updateTopic(
                         topic != null

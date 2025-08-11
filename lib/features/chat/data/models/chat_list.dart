@@ -69,6 +69,12 @@ class Persona {
   static final List<Map<String, String>> _pictures = [
     {"picture": 'assets/images/personas/1.jpg', "gender": "male"},
     {"picture": 'assets/images/personas/2.jpg', "gender": "female"},
+    {"picture": 'assets/images/personas/3.jpg', "gender": "female"},
+    {"picture": 'assets/images/personas/4.jpg', "gender": "female"},
+    {"picture": 'assets/images/personas/5.jpg', "gender": "male"},
+    {"picture": 'assets/images/personas/6.jpg', "gender": "female"},
+    {"picture": 'assets/images/personas/7.jpg', "gender": "male"},
+    {"picture": 'assets/images/personas/8.jpg', "gender": "male"},
   ];
 
   static final List<PersonaName> _maleNames = [
@@ -115,6 +121,60 @@ class Persona {
       randomName = _femaleNames[Random().nextInt(_femaleNames.length)];
     }
 
+    final String personality =
+        _personalities[Random().nextInt(_personalities.length)];
+
+    return Persona(
+      name: randomName,
+      picturePath: picturePath,
+      personality: personality,
+    );
+  }
+
+  /// Returns a persona witha unique name and picture.
+  /// If no unique name or picture is available, it returns an already used one.
+  static Persona randomUnique(List<Persona> existingPersonas) {
+    final Set<PersonaName> usedNames = existingPersonas
+        .map((p) => p.name)
+        .toSet();
+    final Set<String> usedPictures = existingPersonas
+        .map((p) => p.picturePath)
+        .toSet();
+
+    final List<PersonaName> unusedNames = [
+      ..._maleNames.where((name) => !usedNames.contains(name)),
+      ..._femaleNames.where((name) => !usedNames.contains(name)),
+    ];
+
+    final List<Map<String, String>> unusedPictures = _pictures
+        .where((picture) => !usedPictures.contains(picture["picture"]))
+        .toList();
+
+    if (unusedNames.isEmpty || unusedPictures.isEmpty) {
+      return random();
+    }
+
+    final pictureData = unusedPictures[Random().nextInt(unusedPictures.length)];
+    final String picturePath = pictureData["picture"]!;
+    final String gender = pictureData["gender"]!;
+
+    final List<PersonaName> availableNames;
+    if (gender == "male") {
+      availableNames = unusedNames
+          .where((name) => _maleNames.contains(name))
+          .toList();
+    } else {
+      availableNames = unusedNames
+          .where((name) => _femaleNames.contains(name))
+          .toList();
+    }
+
+    if (availableNames.isEmpty) {
+      return random();
+    }
+
+    final PersonaName randomName =
+        availableNames[Random().nextInt(availableNames.length)];
     final String personality =
         _personalities[Random().nextInt(_personalities.length)];
 
