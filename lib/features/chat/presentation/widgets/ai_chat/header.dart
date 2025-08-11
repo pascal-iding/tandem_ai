@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tandem_ai/features/chat/data/models/chat_list.dart';
 import 'package:tandem_ai/features/chat/logic/cubit/chat_list_cubit.dart';
 import 'package:tandem_ai/features/chat/presentation/widgets/active_chat_list/active_indicator.dart';
+import 'package:tandem_ai/l10n/app_localizations.dart';
 
 class Header extends StatefulWidget {
   const Header({super.key});
@@ -90,7 +91,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                         ],
                       ),
                       Text(
-                        'Lebt in ${activeChat.settings.getCityOfOrigin()}',
+                        '${AppLocalizations.of(context)!.from} ${activeChat.settings.getCityOfOrigin()}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tandem_ai/l10n/app_localizations.dart';
 import 'package:tandem_ai/shared/widgets/form_elements/buttons/default_filled_button.dart';
 import 'package:tandem_ai/shared/widgets/form_elements/error_message.dart';
 import 'package:tandem_ai/shared/widgets/header/header.dart';
@@ -84,10 +85,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Header(showBackButton: true),
             const SizedBox(height: 21),
-            Text('Dein Profil', style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              AppLocalizations.of(context)!.yourProfile,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             const SizedBox(height: 21),
             DefaultTextInput(
-              hint: 'Dein Api Key',
+              hint: AppLocalizations.of(context)!.apiKeyHint,
               title: 'Api Key',
               controller: _apiKeyController,
               onChanged: (value) => setState(() {
@@ -99,7 +103,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ErrorMessage(errorMessage: widget.errorMessage!),
             const SizedBox(height: 11),
             if (_initialKey != _currentKey)
-              DefaultFilledButton(label: 'Speichern', onPressed: _saveApiKey),
+              DefaultFilledButton(
+                label: AppLocalizations.of(context)!.save,
+                onPressed: _saveApiKey,
+              ),
           ],
         ),
       ),

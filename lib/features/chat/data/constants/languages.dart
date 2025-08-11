@@ -1,19 +1,22 @@
+import 'package:flutter/widgets.dart';
+import 'package:tandem_ai/l10n/app_localizations.dart';
+
 enum Language {
   german,
   english,
   spanish,
   italian;
 
-  String get name {
+  String getName(BuildContext context) {
     switch (this) {
       case Language.german:
-        return "Deutsch";
+        return AppLocalizations.of(context)!.german;
       case Language.english:
-        return "Englisch";
+        return AppLocalizations.of(context)!.english;
       case Language.spanish:
-        return "Spanisch";
+        return AppLocalizations.of(context)!.spanish;
       case Language.italian:
-        return "Italienisch";
+        return AppLocalizations.of(context)!.italian;
     }
   }
 
@@ -30,26 +33,27 @@ enum Language {
     }
   }
 
-  static List<String> get languageList {
-    return Language.values.map((language) => language.name).toList();
+  static List<String> getLanguageList(BuildContext context) {
+    return Language.values
+        .map((language) => language.getName(context))
+        .toList();
   }
 
-  static String get defaultLanguage {
-    return Language.spanish.name;
+  static String getDefaultLanguage(BuildContext context) {
+    return Language.spanish.getName(context);
   }
 
-  static Language fromString(String language) {
-    switch (language) {
-      case 'Deutsch':
-        return Language.german;
-      case 'Englisch':
-        return Language.english;
-      case 'Spanisch':
-        return Language.spanish;
-      case 'Italienisch':
-        return Language.italian;
-      default:
-        throw Exception('Unknown language: $language');
+  static Language fromString(String language, BuildContext context) {
+    if (language == AppLocalizations.of(context)!.german) {
+      return Language.german;
+    } else if (language == AppLocalizations.of(context)!.english) {
+      return Language.english;
+    } else if (language == AppLocalizations.of(context)!.spanish) {
+      return Language.spanish;
+    } else if (language == AppLocalizations.of(context)!.italian) {
+      return Language.italian;
+    } else {
+      throw Exception('Unknown language: $language');
     }
   }
 }

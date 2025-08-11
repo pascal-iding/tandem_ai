@@ -66,6 +66,16 @@ class _ChatBubbleState extends State<ChatBubble>
     }
   }
 
+  String _getFormattedDate(DateTime date, BuildContext context) {
+    final locale = Localizations.localeOf(context);
+
+    if (locale.languageCode == 'en') {
+      return DateFormat('MM/dd/yyyy h:mm a').format(date);
+    } else {
+      return DateFormat('dd.MM.yyyy HH:mm').format(date);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SlideTransition(
@@ -221,9 +231,7 @@ class _ChatBubbleState extends State<ChatBubble>
                               ),
                             ),
                             child: Text(
-                              DateFormat(
-                                'dd.MM.yyyy HH:mm',
-                              ).format(widget.date),
+                              _getFormattedDate(widget.date, context),
                               style: widget.isUserMessage
                                   ? Theme.of(context).textTheme.bodySmall
                                   : Theme.of(

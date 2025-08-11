@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tandem_ai/l10n/app_localizations.dart';
 
 import 'package:tandem_ai/shared/themes/default_theme.dart';
 import 'routes/app_router.dart';
@@ -31,6 +33,16 @@ class _MainAppState extends State<MainApp> {
       theme: widget.defaultTheme.light(),
       themeMode: ThemeMode.light,
       routerConfig: appRouter,
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en'), // English
+        Locale('de'), // German
+      ],
     );
   }
 }

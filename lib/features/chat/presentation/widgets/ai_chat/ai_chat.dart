@@ -7,6 +7,7 @@ import 'package:tandem_ai/features/chat/data/models/chat_list.dart';
 
 import 'package:tandem_ai/features/chat/logic/cubit/chat_list_cubit.dart';
 import 'package:tandem_ai/features/chat/presentation/widgets/ai_chat/chat_history/chat_history.dart';
+import 'package:tandem_ai/l10n/app_localizations.dart';
 import 'package:tandem_ai/shared/utils/api_key_repository.dart';
 import './header.dart';
 import 'package:tandem_ai/shared/widgets/form_elements/text_inputs/default_text_area.dart';
@@ -206,7 +207,7 @@ class _AiChatState extends State<AiChat> {
                     bottom: padding.bottom + 21,
                   ),
                   child: DefaultTextArea(
-                    hint: 'Deine Nachricht ...',
+                    hint: AppLocalizations.of(context)!.yourMessage,
                     controller: _textController,
                     isLoading: _isLoading,
                     onSend: () {

@@ -29,7 +29,7 @@ class _HeaderState extends State<Header> {
         if (!widget.showBackButton)
           ButtonSmall(
             iconPath: 'assets/icons/more-vertical.svg',
-            onPressed: () => debugPrint('Pressed'),
+            onPressed: () => context.push('/about'),
           ),
         if (widget.showBackButton)
           ButtonSmall(

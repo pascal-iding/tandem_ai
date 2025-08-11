@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tandem_ai/features/chat/logic/cubit/chat_list_cubit.dart';
+import 'package:tandem_ai/l10n/app_localizations.dart';
 
 import 'package:tandem_ai/shared/widgets/header/header.dart';
 import 'package:tandem_ai/shared/widgets/form_elements/buttons/default_filled_button.dart';
@@ -47,7 +48,7 @@ class ChatSettings extends StatelessWidget {
                 Header(),
                 const SizedBox(height: 21),
                 Text(
-                  'Starte eine Konversation',
+                  AppLocalizations.of(context)!.title,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 21),
@@ -59,7 +60,7 @@ class ChatSettings extends StatelessWidget {
             children: [
               const SizedBox(height: 8),
               DefaultFilledButton(
-                label: 'Neue Konversation starten',
+                label: AppLocalizations.of(context)!.newConversation,
                 onPressed: () => _onStartConversation(context),
               ),
             ],

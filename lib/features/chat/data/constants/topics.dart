@@ -1,19 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:tandem_ai/l10n/app_localizations.dart';
+
 enum Topic {
   leisure,
   business,
   travel,
   food;
 
-  String get name {
+  String getName(BuildContext context) {
     switch (this) {
       case Topic.leisure:
-        return "Freizeit";
+        return AppLocalizations.of(context)!.leisure;
       case Topic.business:
-        return "Geschäftlich";
+        return AppLocalizations.of(context)!.business;
       case Topic.travel:
-        return "Reisen";
+        return AppLocalizations.of(context)!.travel;
       case Topic.food:
-        return "Essen";
+        return AppLocalizations.of(context)!.food;
     }
   }
 
@@ -30,26 +33,25 @@ enum Topic {
     }
   }
 
-  static List<String> get topicList {
-    return Topic.values.map((topic) => topic.name).toList();
+  static List<String> getTopicList(BuildContext context) {
+    return Topic.values.map((topic) => topic.getName(context)).toList();
   }
 
-  static String get defaultTopic {
-    return Topic.leisure.name;
+  static String getdefaultTopic(BuildContext context) {
+    return Topic.leisure.getName(context);
   }
 
-  static Topic fromString(String topic) {
-    switch (topic) {
-      case 'Freizeit':
-        return Topic.leisure;
-      case 'Geschäftlich':
-        return Topic.business;
-      case 'Reisen':
-        return Topic.travel;
-      case 'Essen':
-        return Topic.food;
-      default:
-        throw Exception('Unknown topic: $topic');
+  static Topic fromString(String topic, BuildContext context) {
+    if (topic == AppLocalizations.of(context)!.leisure) {
+      return Topic.leisure;
+    } else if (topic == AppLocalizations.of(context)!.business) {
+      return Topic.business;
+    } else if (topic == AppLocalizations.of(context)!.travel) {
+      return Topic.travel;
+    } else if (topic == AppLocalizations.of(context)!.food) {
+      return Topic.food;
+    } else {
+      throw Exception('Unknown topic: $topic');
     }
   }
 }
