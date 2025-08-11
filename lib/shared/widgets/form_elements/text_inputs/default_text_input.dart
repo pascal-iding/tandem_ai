@@ -7,15 +7,15 @@ class DefaultTextInput extends StatelessWidget {
   final String? title;
   final String hint;
   final String? topicIconPath;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final bool isPassword;
-  final ValueChanged<String>? onChanged; // Add this parameter
+  final ValueChanged<String>? onChanged;
 
   const DefaultTextInput({
     super.key,
     this.title,
     required this.hint,
-    required this.controller,
+    this.controller,
     this.topicIconPath,
     this.isPassword = false,
     this.onChanged, // Add this parameter

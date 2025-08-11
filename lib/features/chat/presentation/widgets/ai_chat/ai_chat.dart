@@ -1,13 +1,17 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tandem_ai/features/chat/data/constants/message_author.dart';
 import 'package:tandem_ai/features/chat/data/models/chat_list.dart';
 
 import 'package:tandem_ai/features/chat/logic/cubit/chat_list_cubit.dart';
 import 'package:tandem_ai/features/chat/presentation/widgets/ai_chat/chat_history/chat_history.dart';
+import 'package:tandem_ai/shared/utils/api_key_repository.dart';
 import './header.dart';
 import 'package:tandem_ai/shared/widgets/form_elements/text_inputs/default_text_area.dart';
 import '..//../../../data/repositories/chat_repository.dart';
+import 'package:tandem_ai/shared/widgets/snackbar.dart' as tandem_ai;
 
 
 class AiChat extends StatefulWidget {
@@ -89,8 +93,15 @@ class _AiChatState extends State<AiChat> {
         feedback: response.feedback
       )]);
     } catch (e) {
-      print('Error making API call: $e');
-      // TODO: Add snackbar
+      if (e is ApiKeyException) {
+        tandem_ai.Snackbar.build(context, 'Api Key konnte nicht geladen werden.');
+      } else if (e is UnauthorizedException) {
+        if (mounted) {
+          context.go('/profile?errorMessage="Dein Api Key ist ungültig."');
+        }
+      } else {
+        tandem_ai.Snackbar.build(context, 'Bitte überprüfe deine Internetverbindung.');
+      }
     } finally {
       if (mounted) {
         setState(() {

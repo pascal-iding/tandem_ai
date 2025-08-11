@@ -6,6 +6,7 @@ import 'package:tandem_ai/features/chat/data/constants/languages.dart';
 import 'package:tandem_ai/features/chat/data/constants/message_author.dart';
 import 'package:tandem_ai/features/chat/data/constants/topics.dart';
 import 'package:tandem_ai/features/chat/data/models/chat_list.dart';
+import 'package:tandem_ai/shared/utils/api_key_repository.dart';
 
 
 class ChatBotAnswer {
@@ -16,9 +17,16 @@ class ChatBotAnswer {
 }
 
 class ChatRepository {
-  static final String _apiKey = '';
+
   static Future<ChatBotAnswer> getAnswer(Chat chat, String newMessage) async {
-    // return ChatBotAnswer(text: 'Test', feedback: 'Hallo Welt uihde iuhc iwec bidsub ciwdu bcfiwdhb efciwe b');
+    String apiKey = '';
+    try {
+      ApiKeyRepository apiKeyRepository = ApiKeyRepository();
+      apiKey = await apiKeyRepository.getApiKey();
+    } catch (e) {
+      rethrow;
+    }
+
     final String instructions = 
       'You are talking to a language learner. Strictly only answer in the following language: ${getLanguageNameEn(chat.settings.language)}.'
       'Keep your answer under 70 words (or about 2 sentences).'
@@ -65,7 +73,7 @@ class ChatRepository {
       url,
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer $_apiKey",
+        "Authorization": "Bearer $apiKey",
       },
       body: jsonEncode({
         "model": "gpt-5-mini",
@@ -110,9 +118,19 @@ class ChatRepository {
         feedback: parsedJson["feedback"],
       );
     } else {
-      throw Exception(
+      throw UnauthorizedException(
         "Failed to get answer: ${response.statusCode} - ${response.body}",
       );
     }
   }
 }
+
+
+class UnauthorizedException implements Exception {
+  final String message;
+  UnauthorizedException(this.message);
+
+  @override
+  String toString() => 'UnauthorizedException: $message';
+}
+

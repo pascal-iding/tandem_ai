@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:tandem_ai/shared/widgets/form_elements/buttons/button_small.dart';
 
@@ -23,7 +24,7 @@ class _HeaderState extends State<Header> {
         if (!widget.showBackButton)
           ButtonSmall(
             iconPath: 'assets/icons/user.svg',
-            onPressed: () => print('Pressed')
+            onPressed: () => context.go('/profile')
           ),
         if (!widget.showBackButton)
           const SizedBox(width: 11),
@@ -35,7 +36,7 @@ class _HeaderState extends State<Header> {
         if (widget.showBackButton)
           ButtonSmall(
             iconPath: 'assets/icons/arrow-left.svg',
-            onPressed:() => Navigator.pop(context)
+            onPressed:() => context.go('/chat')
           ),
       ],
     );
