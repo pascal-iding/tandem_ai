@@ -44,27 +44,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
     } catch (e) {
       if (mounted) {
-        tandem_ai.Snackbar.build(context, 'Ein unbekannter Fehler ist aufgetreten');
+        tandem_ai.Snackbar.show(context, 'Ein unbekannter Fehler ist aufgetreten');
       }
     }
   }
 
   void _saveApiKey() {
-    final apiKey = _apiKeyController.text.trim();
-    if (apiKey.isEmpty) {
-      tandem_ai.Snackbar.build(context, 'Bitte gib einen gültigen Api Key ein.');
-      return;
-    } 
-
     try {
       _apiKeyStorage.saveApiKey(_apiKeyController.text);
       setState(() {
         _initialKey = _apiKeyController.text;
       });
       
-      tandem_ai.Snackbar.build(context, 'Api Key gespeichert.');
+      tandem_ai.Snackbar.show(context, 'Api Key gespeichert.');
     } catch (e) {
-      tandem_ai.Snackbar.build(context, 'Ein unbekannter Fehler ist aufgetreten.');
+      tandem_ai.Snackbar.show(context, 'Ein unbekannter Fehler ist aufgetreten.');
     }
   }
 

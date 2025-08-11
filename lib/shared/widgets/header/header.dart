@@ -24,7 +24,7 @@ class _HeaderState extends State<Header> {
         if (!widget.showBackButton)
           ButtonSmall(
             iconPath: 'assets/icons/user.svg',
-            onPressed: () => context.go('/profile')
+            onPressed: () => context.push('/profile')
           ),
         if (!widget.showBackButton)
           const SizedBox(width: 11),
@@ -36,7 +36,7 @@ class _HeaderState extends State<Header> {
         if (widget.showBackButton)
           ButtonSmall(
             iconPath: 'assets/icons/arrow-left.svg',
-            onPressed:() => context.go('/chat')
+            onPressed:() => context.pop()
           ),
       ],
     );

@@ -15,6 +15,7 @@ class ApiKeyRepository {
   }
 
   Future<void> saveApiKey(String apiKey) async {
+    print('save api key');
     try {
       final trimmedApiKey = apiKey.trim();
       if (trimmedApiKey.isEmpty) {
@@ -28,6 +29,7 @@ class ApiKeyRepository {
   }
 
   Future<void> deleteApiKey() async {
+    print('Delete api key');
     try {
       await _secureStorage.delete(key: _apiKeyKey);
     } catch (e) {

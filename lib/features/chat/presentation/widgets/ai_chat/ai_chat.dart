@@ -31,10 +31,12 @@ class AiChat extends StatefulWidget {
 class _AiChatState extends State<AiChat> {
   late TextEditingController _textController;
   bool _isLoading = false;
+  ///Prevent endless loop if an exception occurs during onSend!
+  bool _initialMessageRequested = false;
+  int _activeChatId = -1;
   
-  // Adjust these values to control the fade behavior
-  static const double _fadeStartOffset = 0.0;
-  static const double _fadeEndOffset = 200.0;
+  final double _fadeStartOffset = 0.0;
+  final double _fadeEndOffset = 200.0;
 
   @override
   void initState() {
@@ -50,7 +52,7 @@ class _AiChatState extends State<AiChat> {
 
   double _calculateHeaderOpacity() {
     if (widget.scrollOffset <= _fadeStartOffset) {
-      return 0.0; // Fully transparent at the top
+      return 0.0;
     } else if (widget.scrollOffset >= _fadeEndOffset) {
       return 1.0; // Fully opaque after scrolling enough
     } else {
@@ -94,13 +96,16 @@ class _AiChatState extends State<AiChat> {
       )]);
     } catch (e) {
       if (e is ApiKeyException) {
-        tandem_ai.Snackbar.build(context, 'Api Key konnte nicht geladen werden.');
+        tandem_ai.Snackbar.show(context, 'Api Key konnte nicht geladen werden.');
+        return;
       } else if (e is UnauthorizedException) {
         if (mounted) {
-          context.go('/profile?errorMessage="Dein Api Key ist ungültig."');
+          context.push('/profile?errorMessage="Dein Api Key ist ungültig."');
+          return;
         }
       } else {
-        tandem_ai.Snackbar.build(context, 'Bitte überprüfe deine Internetverbindung.');
+        tandem_ai.Snackbar.show(context, 'Bitte überprüfe deine Internetverbindung.');
+        return;
       }
     } finally {
       if (mounted) {
@@ -111,15 +116,42 @@ class _AiChatState extends State<AiChat> {
     }
   }
 
+  void requestInitialMessage(Chat? activeChat) {
+    if (activeChat != null && _activeChatId != activeChat.id) {
+      setState(() {
+        _activeChatId = activeChat.id;
+        _initialMessageRequested = false;
+      });
+    }
+
+    if (activeChat == null) {
+      setState(() {
+        _activeChatId = -1;
+        _initialMessageRequested = false;
+      });
+    }
+
+    bool shouldRequestInitialMessage = 
+      !_initialMessageRequested 
+      && activeChat != null 
+      && activeChat.messages.isEmpty
+    ;
+
+    if (shouldRequestInitialMessage) {
+      setState(() {
+        _initialMessageRequested = true;
+      });
+      onSend(isInitialMessage: true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Chat? activeChat = context.read<ChatListCubit>().getActiveChat();
     final EdgeInsets padding = MediaQuery.of(context).padding;
     final double headerOpacity = _calculateHeaderOpacity();
 
-    if (activeChat != null && activeChat.messages.isEmpty) {
-      onSend(isInitialMessage: true);
-    }
+    requestInitialMessage(activeChat);
 
     return Container(
       width: double.infinity,
