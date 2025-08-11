@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:tandem_ai/features/about/about_screen.dart';
+import 'package:tandem_ai/features/about/presentation/screens/about_screen.dart';
 import '../features/chat/presentation/screens/chat_screen.dart';
 import '../features/profile/presentation/screens/profile_screen.dart';
 
