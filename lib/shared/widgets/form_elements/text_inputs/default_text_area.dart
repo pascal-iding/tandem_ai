@@ -36,6 +36,7 @@ class DefaultTextArea extends StatelessWidget {
                 Expanded(
                   child: TextFormField(
                     controller: controller,
+                    autofocus: false,
                     keyboardType: TextInputType.multiline,
                     textInputAction: TextInputAction.newline,
                     textAlignVertical: TextAlignVertical.bottom,
