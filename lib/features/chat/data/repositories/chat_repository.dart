@@ -8,6 +8,7 @@ import 'package:tandem_ai/shared/utils/api_key_repository.dart';
 
 class ChatRepository {
   static Future<ChatBotAnswer> getAnswer(Chat chat, String newMessage) async {
+    return ChatBotAnswer(text: 'iuasdiduhasiudgiasudgiasudgxuiwsqgduiwzsgdcuzwesgdcuzgsdcuzgweedczg');
     String apiKey = '';
     try {
       ApiKeyRepository apiKeyRepository = ApiKeyRepository();

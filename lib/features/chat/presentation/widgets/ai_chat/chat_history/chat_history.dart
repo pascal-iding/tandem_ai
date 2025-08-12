@@ -53,9 +53,18 @@ class _ChatHistoryState extends State<ChatHistory> {
       });
     }
 
+    if (activeChat != null) {
+      setState(() {
+        _previousMessageCount = activeChat.messages.length;
+      });
+    }
+
     return activeChat != null
-        ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 21),
+        ? Container(
+            padding: EdgeInsets.only(
+              left: 21,
+              right: 21,
+            ),
             child: ListView.builder(
               controller: _scrollController,
               physics: const BouncingScrollPhysics(),

@@ -41,9 +41,6 @@ class DefaultTextArea extends StatelessWidget {
                     textAlignVertical: TextAlignVertical.bottom,
                     minLines: 1,
                     maxLines: 3,
-                    onTapOutside: (event) {
-                      FocusScope.of(context).unfocus();
-                    },
                     onChanged: onChanged,
                     style: Theme.of(context).textTheme.bodyMedium,
                     decoration: InputDecoration(

@@ -2,7 +2,7 @@
 # 📚 TandemAi – AI-Powered Language Learning App
 
 TandemAi helps you improve your language skills by chatting with an AI partner.  
-Choose your **language**, **topic**, and **proficiency level**, and start practicing in a natural, interactive way.
+Choose your **language**, **topic**, and **proficiency level**, and start practicing in a natural, interactive way. The ai chat partner will show mistakes.
 
 ---
 
