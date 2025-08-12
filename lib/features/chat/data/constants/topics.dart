@@ -20,6 +20,7 @@ enum Topic {
     }
   }
 
+  /// Used for chatgpt instructions
   String get nameEn {
     switch (this) {
       case Topic.leisure:

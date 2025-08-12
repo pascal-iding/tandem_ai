@@ -53,7 +53,6 @@ void main() {
 
   group('main function', () {
     test('main function can be called', () {
-      // Test that main function exists and can be referenced
       expect(main, isA<Function>());
     });
   });
