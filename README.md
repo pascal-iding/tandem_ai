@@ -1,23 +1,23 @@
 
-# 📚 TandemAi – AI-Powered Language Learning App
+# TandemAi – AI-Powered Language Learning App
 
 TandemAi helps you improve your language skills by chatting with an AI partner.  
 Choose your **language**, **topic**, and **proficiency level**, and start practicing in a natural, interactive way. The ai chat partner will show mistakes.
 
 ---
 
-## ✨ Features
+## Features
 
-- 🗣 **AI Chat Partner** – Practice real conversations in multiple languages.  
-- 🌐 **Language Selection** – Switch between supported languages.  
-- 🎯 **Custom Topics** – Set the conversation theme.  
-- 📊 **Language Level** – Adjust difficulty according to your skill level.  
-- 🔑 **API Key Management** – User-provided API key required for AI access.  
-- 🇩🇪🇬🇧 **Multilingual Interface** – Currently available in **English** and **German**.  
+- **AI Chat Partner** – Practice real conversations in multiple languages.  
+- **Language Selection** – Switch between supported languages.  
+- **Custom Topics** – Set the conversation theme.  
+- **Language Level** – Adjust difficulty according to your skill level.  
+- **API Key Management** – User-provided API key required for AI access.  
+- **Multilingual Interface** – Currently available in **English** and **German**.  
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - **Flutter** – Cross-platform UI framework  
 - **Flutter Bloc** – State management  
@@ -27,7 +27,7 @@ Choose your **language**, **topic**, and **proficiency level**, and start practi
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 /features
 /chat
@@ -39,7 +39,7 @@ ai_chat # chat with ai partner
 /routes # App navigation
 /shared # Shared widgets & utilities
 
-## 📜 Architecture Overview
+## Architecture Overview
 Feature-Driven Design – Each feature (Chat, Profile, About) is self-contained.
 
 Chat Flow – Starts in chat_settings → launches ai_chat.
