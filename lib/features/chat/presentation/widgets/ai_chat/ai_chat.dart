@@ -194,31 +194,32 @@ class _AiChatState extends State<AiChat> {
         ),
       ),
       child: activeChat != null
-        ? Column(
-            children: [
-              Opacity(opacity: headerOpacity, child: Header()),
-              const SizedBox(height: 11),
-              Expanded(child: 
-                ChatHistory()
-              ),
-              const SizedBox(height: 11),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 21,
-                  right: 21,
-                  bottom: padding.bottom + MediaQuery.of(context).viewInsets.bottom + 21,
+          ? Column(
+              children: [
+                Opacity(opacity: headerOpacity, child: Header()),
+                const SizedBox(height: 11),
+                Expanded(child: ChatHistory()),
+                const SizedBox(height: 11),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 21,
+                    right: 21,
+                    bottom:
+                        padding.bottom +
+                        MediaQuery.of(context).viewInsets.bottom +
+                        21,
+                  ),
+                  child: DefaultTextArea(
+                    hint: AppLocalizations.of(context)!.yourMessage,
+                    controller: _textController,
+                    isLoading: _isLoading,
+                    onSend: () {
+                      onSend();
+                    },
+                  ),
                 ),
-                child: DefaultTextArea(
-                  hint: AppLocalizations.of(context)!.yourMessage,
-                  controller: _textController,
-                  isLoading: _isLoading,
-                  onSend: () {
-                    onSend();
-                  },
-                ),
-              ),
-            ],
-          )
+              ],
+            )
           : null,
     );
   }

@@ -61,10 +61,7 @@ class _ChatHistoryState extends State<ChatHistory> {
 
     return activeChat != null
         ? Container(
-            padding: EdgeInsets.only(
-              left: 21,
-              right: 21,
-            ),
+            padding: EdgeInsets.only(left: 21, right: 21),
             child: ListView.builder(
               controller: _scrollController,
               physics: const BouncingScrollPhysics(),
