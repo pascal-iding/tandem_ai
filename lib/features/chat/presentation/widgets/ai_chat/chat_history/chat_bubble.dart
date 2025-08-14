@@ -90,163 +90,9 @@ class _ChatBubbleState extends State<ChatBubble>
                     ? CrossAxisAlignment.end
                     : CrossAxisAlignment.start,
                 children: [
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width * 0.9,
-                    ),
-                    child: GestureDetector(
-                      onTap: _toggleMessage,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                          child: Container(
-                            padding: EdgeInsets.all(21),
-                            decoration: BoxDecoration(
-                              color:
-                                  (widget.isUserMessage ||
-                                      _showCorrectedMessage)
-                                  ? Theme.of(
-                                      context,
-                                    ).colorScheme.surface.withAlpha(170)
-                                  : Theme.of(
-                                      context,
-                                    ).colorScheme.secondary.withAlpha(170),
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color:
-                                    (widget.isUserMessage ||
-                                        _showCorrectedMessage)
-                                    ? Theme.of(
-                                        context,
-                                      ).colorScheme.onSurface.withAlpha(30)
-                                    : Theme.of(
-                                        context,
-                                      ).colorScheme.onSecondary.withAlpha(30),
-                                width: 1,
-                              ),
-                            ),
-                            child: Text(
-                              _showCorrectedMessage &&
-                                      widget.correctedMessage != null
-                                  ? widget.correctedMessage!
-                                  : widget.message,
-                              style:
-                                  (widget.isUserMessage ||
-                                      _showCorrectedMessage)
-                                  ? Theme.of(context).textTheme.bodyMedium
-                                  : Theme.of(
-                                      context,
-                                    ).textTheme.bodyMedium?.copyWith(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSecondary,
-                                    ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  buildChatMessage(context),
                   const SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: widget.isUserMessage
-                        ? MainAxisAlignment.end
-                        : MainAxisAlignment.start,
-                    children: [
-                      if (widget.correctedMessage != null)
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: Container(
-                              width: 23,
-                              height: 23,
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: widget.isUserMessage
-                                    ? Theme.of(
-                                        context,
-                                      ).colorScheme.surface.withAlpha(170)
-                                    : Theme.of(
-                                        context,
-                                      ).colorScheme.secondary.withAlpha(170),
-                                border: Border.all(
-                                  color: widget.isUserMessage
-                                      ? Theme.of(
-                                          context,
-                                        ).colorScheme.onSurface.withAlpha(30)
-                                      : Theme.of(
-                                          context,
-                                        ).colorScheme.onSecondary.withAlpha(30),
-                                  width: 1,
-                                ),
-                              ),
-                              child: SvgPicture.asset(
-                                'assets/icons/info.svg',
-                                colorFilter: ColorFilter.mode(
-                                  widget.isUserMessage
-                                      ? Theme.of(context).colorScheme.onSurface
-                                      : Theme.of(
-                                          context,
-                                        ).colorScheme.onSecondary,
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      if (widget.correctedMessage != null)
-                        const SizedBox(width: 5),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                          child: Container(
-                            height: 23,
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 3,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: widget.isUserMessage
-                                  ? Theme.of(
-                                      context,
-                                    ).colorScheme.surface.withAlpha(170)
-                                  : Theme.of(
-                                      context,
-                                    ).colorScheme.secondary.withAlpha(170),
-                              border: Border.all(
-                                color: widget.isUserMessage
-                                    ? Theme.of(
-                                        context,
-                                      ).colorScheme.onSurface.withAlpha(30)
-                                    : Theme.of(
-                                        context,
-                                      ).colorScheme.onSecondary.withAlpha(30),
-                                width: 1,
-                              ),
-                            ),
-                            child: Text(
-                              _getFormattedDate(widget.date, context),
-                              style: widget.isUserMessage
-                                  ? Theme.of(context).textTheme.bodySmall
-                                  : Theme.of(
-                                      context,
-                                    ).textTheme.bodySmall?.copyWith(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSecondary,
-                                    ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  buildMetadata(context),
                   const SizedBox(height: 8),
                 ],
               ),
@@ -254,6 +100,168 @@ class _ChatBubbleState extends State<ChatBubble>
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildChatMessage(BuildContext context) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width * 0.9,
+      ),
+      child: GestureDetector(
+        onTap: _toggleMessage,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              padding: EdgeInsets.all(21),
+              decoration: BoxDecoration(
+                color:
+                    (widget.isUserMessage ||
+                        _showCorrectedMessage)
+                    ? Theme.of(
+                        context,
+                      ).colorScheme.surface.withAlpha(170)
+                    : Theme.of(
+                        context,
+                      ).colorScheme.secondary.withAlpha(170),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color:
+                      (widget.isUserMessage ||
+                          _showCorrectedMessage)
+                      ? Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withAlpha(30)
+                      : Theme.of(
+                          context,
+                        ).colorScheme.onSecondary.withAlpha(30),
+                  width: 1,
+                ),
+              ),
+              child: Text(
+                _showCorrectedMessage &&
+                        widget.correctedMessage != null
+                    ? widget.correctedMessage!
+                    : widget.message,
+                style:
+                    (widget.isUserMessage ||
+                        _showCorrectedMessage)
+                    ? Theme.of(context).textTheme.bodyMedium
+                    : Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSecondary,
+                      ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildMetadata(BuildContext context) {
+    return Row(
+      mainAxisAlignment: widget.isUserMessage
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
+      children: [
+        if (widget.correctedMessage != null)
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                width: 23,
+                height: 23,
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: widget.isUserMessage
+                      ? Theme.of(
+                          context,
+                        ).colorScheme.surface.withAlpha(170)
+                      : Theme.of(
+                          context,
+                        ).colorScheme.secondary.withAlpha(170),
+                  border: Border.all(
+                    color: widget.isUserMessage
+                        ? Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withAlpha(30)
+                        : Theme.of(
+                            context,
+                          ).colorScheme.onSecondary.withAlpha(30),
+                    width: 1,
+                  ),
+                ),
+                child: SvgPicture.asset(
+                  'assets/icons/info.svg',
+                  colorFilter: ColorFilter.mode(
+                    widget.isUserMessage
+                        ? Theme.of(context).colorScheme.onSurface
+                        : Theme.of(
+                            context,
+                          ).colorScheme.onSecondary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        if (widget.correctedMessage != null)
+          const SizedBox(width: 5),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              height: 23,
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 3,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: widget.isUserMessage
+                    ? Theme.of(
+                        context,
+                      ).colorScheme.surface.withAlpha(170)
+                    : Theme.of(
+                        context,
+                      ).colorScheme.secondary.withAlpha(170),
+                border: Border.all(
+                  color: widget.isUserMessage
+                      ? Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withAlpha(30)
+                      : Theme.of(
+                          context,
+                        ).colorScheme.onSecondary.withAlpha(30),
+                  width: 1,
+                ),
+              ),
+              child: Text(
+                _getFormattedDate(widget.date, context),
+                style: widget.isUserMessage
+                    ? Theme.of(context).textTheme.bodySmall
+                    : Theme.of(
+                        context,
+                      ).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSecondary,
+                      ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
