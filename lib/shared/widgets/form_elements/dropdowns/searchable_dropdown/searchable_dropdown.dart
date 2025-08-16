@@ -21,12 +21,16 @@ class SearchableDropdown extends StatefulWidget {
   State<SearchableDropdown> createState() => _SearchableDropdownState();
 }
 
-class _SearchableDropdownState extends State<SearchableDropdown> {
+class _SearchableDropdownState extends State<SearchableDropdown> 
+    with SingleTickerProviderStateMixin {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   List<String> _filteredItems = [];
   bool _isExpanded = false;
   OverlayEntry? _overlayEntry;
+  
+  late AnimationController _animationController;
+  late Animation<double> _heightAnimation;
 
   @override
   void initState() {
@@ -34,6 +38,20 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
     _filteredItems = widget.dropdownItems;
     _searchController.addListener(_onSearchChanged);
     _focusNode.addListener(_onFocusChanged);
+    
+    // Initialize animation controller
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    
+    _heightAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeOutCubic,
+    ));
     
     // Set initial text to current value
     if (widget.value != null) {
@@ -70,6 +88,7 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
     _focusNode.removeListener(_onFocusChanged);
     _searchController.dispose();
     _focusNode.dispose();
+    _animationController.dispose();
     _removeOverlay();
     super.dispose();
   }
@@ -119,10 +138,13 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
 
     _overlayEntry = _createOverlayEntry();
     Overlay.of(context).insert(_overlayEntry!);
+    _animationController.forward();
   }
 
   void _hideOverlay() {
-    _removeOverlay();
+    _animationController.reverse().then((_) {
+      _removeOverlay();
+    });
     setState(() {
       _isExpanded = false;
     });
@@ -135,7 +157,11 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
 
   void _updateOverlay() {
     if (_overlayEntry != null) {
-      _overlayEntry!.markNeedsBuild();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_overlayEntry != null) {
+          _overlayEntry!.markNeedsBuild();
+        }
+      });
     }
   }
 
@@ -166,6 +192,7 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
                     selectedValue: widget.value,
                     onItemSelected: _selectItem,
                     onOutsideTap: () => _focusNode.unfocus(),
+                    heightAnimation: _heightAnimation,
                   ),
                 ),
               ),
