@@ -51,7 +51,7 @@ class ChatSettingsOptions extends StatelessWidget {
                       ),
                 ),
                 const SizedBox(height: 11),
-                DefaultDropdown(
+                SearchableDropdown(
                   title: AppLocalizations.of(context)!.langageSelection,
                   hint: chatSettings.language.getName(context),
                   value: chatSettings.language.getName(context),
@@ -67,7 +67,7 @@ class ChatSettingsOptions extends StatelessWidget {
                       ),
                 ),
                 const SizedBox(height: 11),
-                DefaultDropdown(
+                SearchableDropdown(
                   title: AppLocalizations.of(context)!.levelSelection,
                   hint: chatSettings.level.getName(context),
                   value: chatSettings.level.getName(context),
