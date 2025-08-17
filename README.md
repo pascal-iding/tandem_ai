@@ -27,22 +27,10 @@ Choose your **language**, **topic**, and **proficiency level**, and start practi
 
 ---
 
-## Project Structure
-
-/features
-/chat
-chat_settings # Create new chat
-ai_chat # chat with ai partner
-/profile # Enter Api Key
-/about
-/l10n # Localizations (German & English)
-/routes # App navigation
-/shared # Shared widgets & utilities
-
 ## Architecture Overview
 Feature-Driven Design – Each feature (Chat, Profile, About) is self-contained.
 
-Chat Flow – Starts in chat_settings → launches ai_chat.
+Chat – Starts in chat_settings (Create new chat, switch chat, etc) → launches ai_chat (The actual chat).
 
 Profile – Allows entering & saving API key.
 
