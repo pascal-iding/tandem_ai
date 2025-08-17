@@ -27,7 +27,7 @@ void main() {
           name: 'Test Chat',
           language: Language.english,
           level: LanguageLevel.a1,
-          topic: Topic.leisure,
+          topic: Topic.movies,
         ),
       );
       final chatList = ChatList(chats: [chat], activeChatIndex: 0);
@@ -49,7 +49,7 @@ void main() {
           name: 'Test Chat',
           language: Language.english,
           level: LanguageLevel.a1,
-          topic: Topic.leisure,
+          topic: Topic.movies,
         ),
       );
       final chat2 = Chat(
@@ -63,7 +63,7 @@ void main() {
           name: 'Test Chat',
           language: Language.english,
           level: LanguageLevel.a1,
-          topic: Topic.leisure,
+          topic: Topic.movies,
         ),
       );
 
@@ -89,7 +89,7 @@ void main() {
           name: 'Test Chat',
           language: Language.english,
           level: LanguageLevel.a1,
-          topic: Topic.leisure,
+          topic: Topic.movies,
         ),
       );
 

@@ -18,22 +18,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get topicSelection => 'What do you want to talk about';
 
   @override
-  String get langageSelection => 'What language do you want to learn';
+  String get languageSelection => 'What language do you want to learn';
 
   @override
   String get levelSelection => 'What is your current level';
 
   @override
-  String get leisure => 'Leisure';
+  String get movies => 'Movies';
 
   @override
-  String get business => 'Business';
+  String get sports => 'Sports';
 
   @override
-  String get travel => 'Travel';
+  String get gaming => 'Gaming';
 
   @override
-  String get food => 'Food';
+  String get photography => 'Photography';
+
+  @override
+  String get businessOpportunities => 'Business opportunities';
+
+  @override
+  String get career => 'Career';
+
+  @override
+  String get dreamTravelDestination => 'Dream travel destination';
+
+  @override
+  String get culture => 'Culture';
 
   @override
   String get german => 'German';

@@ -10,7 +10,7 @@ class ChatSettingsCubit extends Cubit<ChatSettings> {
     : super(
         ChatSettings(
           name: 'Jonas',
-          topic: Topic.leisure,
+          topic: Topic.movies,
           language: Language.spanish,
           level: LanguageLevel.b1,
         ),
@@ -52,7 +52,7 @@ class ChatSettingsCubit extends Cubit<ChatSettings> {
     emit(
       ChatSettings(
         name: 'Jonas',
-        topic: Topic.leisure,
+        topic: Topic.movies,
         language: Language.spanish,
         level: LanguageLevel.b1,
       ),

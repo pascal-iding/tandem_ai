@@ -5,7 +5,6 @@ import 'package:tandem_ai/features/chat/data/constants/topics.dart';
 import 'package:tandem_ai/features/chat/data/models/chat_list.dart';
 import 'package:tandem_ai/l10n/app_localizations.dart';
 
-import 'package:tandem_ai/shared/widgets/form_elements/dropdowns/default_dropdown.dart';
 import 'package:tandem_ai/shared/widgets/form_elements/dropdowns/searchable_dropdown/searchable_dropdown.dart';
 import '../active_chat_list/active_chat_list.dart';
 import '../../../logic/cubit/chat_settings_cubit.dart';
@@ -40,6 +39,7 @@ class ChatSettingsOptions extends StatelessWidget {
                   hint: chatSettings.topic.getName(context),
                   dropdownItems: Topic.getTopicList(context),
                   value: chatSettings.topic.getName(context),
+                  categories: Topic.getLanguageCategories(context),
                   onChanged: (topic) =>
                       context.read<ChatSettingsCubit>().updateTopic(
                         topic != null
@@ -52,7 +52,7 @@ class ChatSettingsOptions extends StatelessWidget {
                 ),
                 const SizedBox(height: 11),
                 SearchableDropdown(
-                  title: AppLocalizations.of(context)!.langageSelection,
+                  title: AppLocalizations.of(context)!.languageSelection,
                   hint: chatSettings.language.getName(context),
                   value: chatSettings.language.getName(context),
                   dropdownItems: Language.getLanguageList(context),

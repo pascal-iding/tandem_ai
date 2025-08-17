@@ -19,7 +19,7 @@ void main() {
         name: 'Test Chat',
         language: Language.english,
         level: LanguageLevel.a1,
-        topic: Topic.leisure,
+        topic: Topic.movies,
       );
     });
 

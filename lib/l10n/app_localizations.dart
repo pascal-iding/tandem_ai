@@ -62,8 +62,7 @@ import 'app_localizations_en.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -71,8 +70,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -84,18 +82,17 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('de'),
-    Locale('en'),
+    Locale('en')
   ];
 
   /// No description provided for @title.
@@ -116,11 +113,11 @@ abstract class AppLocalizations {
   /// **'What do you want to talk about'**
   String get topicSelection;
 
-  /// No description provided for @langageSelection.
+  /// No description provided for @languageSelection.
   ///
   /// In en, this message translates to:
   /// **'What language do you want to learn'**
-  String get langageSelection;
+  String get languageSelection;
 
   /// No description provided for @levelSelection.
   ///
@@ -128,29 +125,53 @@ abstract class AppLocalizations {
   /// **'What is your current level'**
   String get levelSelection;
 
-  /// No description provided for @leisure.
+  /// No description provided for @movies.
   ///
   /// In en, this message translates to:
-  /// **'Leisure'**
-  String get leisure;
+  /// **'Movies'**
+  String get movies;
 
-  /// No description provided for @business.
+  /// No description provided for @sports.
   ///
   /// In en, this message translates to:
-  /// **'Business'**
-  String get business;
+  /// **'Sports'**
+  String get sports;
 
-  /// No description provided for @travel.
+  /// No description provided for @gaming.
   ///
   /// In en, this message translates to:
-  /// **'Travel'**
-  String get travel;
+  /// **'Gaming'**
+  String get gaming;
 
-  /// No description provided for @food.
+  /// No description provided for @photography.
   ///
   /// In en, this message translates to:
-  /// **'Food'**
-  String get food;
+  /// **'Photography'**
+  String get photography;
+
+  /// No description provided for @businessOpportunities.
+  ///
+  /// In en, this message translates to:
+  /// **'Business opportunities'**
+  String get businessOpportunities;
+
+  /// No description provided for @career.
+  ///
+  /// In en, this message translates to:
+  /// **'Career'**
+  String get career;
+
+  /// No description provided for @dreamTravelDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Dream travel destination'**
+  String get dreamTravelDestination;
+
+  /// No description provided for @culture.
+  ///
+  /// In en, this message translates to:
+  /// **'Culture'**
+  String get culture;
 
   /// No description provided for @german.
   ///
@@ -267,8 +288,7 @@ abstract class AppLocalizations {
   String get legalNotice;
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -277,26 +297,25 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['de', 'en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['de', 'en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de':
-      return AppLocalizationsDe();
-    case 'en':
-      return AppLocalizationsEn();
+    case 'de': return AppLocalizationsDe();
+    case 'en': return AppLocalizationsEn();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
+    'that was used.'
   );
 }

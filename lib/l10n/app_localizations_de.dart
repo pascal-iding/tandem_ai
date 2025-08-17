@@ -18,22 +18,34 @@ class AppLocalizationsDe extends AppLocalizations {
   String get topicSelection => 'Worüber möchtest du reden';
 
   @override
-  String get langageSelection => 'Welche Sprache möchtest du lernen';
+  String get languageSelection => 'Welche Sprache möchtest du lernen';
 
   @override
   String get levelSelection => 'Wie ist dein aktuelles Level';
 
   @override
-  String get leisure => 'Freizeit';
+  String get movies => 'Filme';
 
   @override
-  String get business => 'Geschäftlich';
+  String get sports => 'Sport';
 
   @override
-  String get travel => 'Reisen';
+  String get gaming => 'Gaming';
 
   @override
-  String get food => 'Essen';
+  String get photography => 'Fotografie';
+
+  @override
+  String get businessOpportunities => 'Geschäftsideen';
+
+  @override
+  String get career => 'Karriere';
+
+  @override
+  String get dreamTravelDestination => 'Traum Reiseziel';
+
+  @override
+  String get culture => 'Kultur';
 
   @override
   String get german => 'Deutsch';

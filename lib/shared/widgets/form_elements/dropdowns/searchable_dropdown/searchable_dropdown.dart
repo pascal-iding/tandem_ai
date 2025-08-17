@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 import 'dropdown_overlay.dart';
 
+class DropdownCategory {
+  final String name;
+  final List<String> items;
+
+  const DropdownCategory({
+    required this.name,
+    required this.items,
+  });
+}
+
 class SearchableDropdown extends StatefulWidget {
   final List<String> dropdownItems;
   final String title;
   final String hint;
   final String? value;
   final ValueChanged<String?>? onChanged;
+  final List<DropdownCategory>? categories;
 
   const SearchableDropdown({
     super.key,
@@ -15,6 +26,7 @@ class SearchableDropdown extends StatefulWidget {
     required this.hint,
     this.value,
     this.onChanged,
+    this.categories,
   });
 
   @override
@@ -28,6 +40,7 @@ class _SearchableDropdownState extends State<SearchableDropdown>
   List<String> _filteredItems = [];
   bool _isExpanded = false;
   OverlayEntry? _overlayEntry;
+  String? _selectedCategory;
   
   late AnimationController _animationController;
   late Animation<double> _heightAnimation;
@@ -39,7 +52,6 @@ class _SearchableDropdownState extends State<SearchableDropdown>
     _searchController.addListener(_onSearchChanged);
     _focusNode.addListener(_onFocusChanged);
     
-    // Initialize animation controller
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 200),
       vsync: this,
@@ -53,17 +65,16 @@ class _SearchableDropdownState extends State<SearchableDropdown>
       curve: Curves.easeOutCubic,
     ));
     
-    // Set initial text to current value
+    initializeTextInputWithDropdownValue();
+  }
+
+  void initializeTextInputWithDropdownValue() {
     if (widget.value != null) {
       _searchController.text = widget.value!;
     }
   }
 
-  @override
-  void didUpdateWidget(SearchableDropdown oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    
-    // Update text field if value changed from parent
+  void updateTextInputOnDropdownValueChange(SearchableDropdown oldWidget) {
     if (widget.value != oldWidget.value) {
       if (widget.value != null) {
         _searchController.text = widget.value!;
@@ -71,8 +82,9 @@ class _SearchableDropdownState extends State<SearchableDropdown>
         _searchController.text = '';
       }
     }
-    
-    // Update filtered items if dropdown items changed
+  }
+
+  void updateFilteredItemsIfDropdownItemsChange(SearchableDropdown oldWidget) {
     if (widget.dropdownItems != oldWidget.dropdownItems) {
       _filteredItems = widget.dropdownItems
           .where((item) =>
@@ -80,6 +92,14 @@ class _SearchableDropdownState extends State<SearchableDropdown>
           .toList();
       _updateOverlay();
     }
+  }
+
+  @override
+  void didUpdateWidget(SearchableDropdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    
+    updateTextInputOnDropdownValueChange(oldWidget);
+    updateFilteredItemsIfDropdownItemsChange(oldWidget);
   }
 
   @override
@@ -95,22 +115,39 @@ class _SearchableDropdownState extends State<SearchableDropdown>
 
   void _onSearchChanged() {
     setState(() {
-      if (_searchController.text.isEmpty) {
-        _filteredItems = widget.dropdownItems; // Show all when empty
-      } else {
-        _filteredItems = widget.dropdownItems
-            .where((item) =>
-                item.toLowerCase().contains(_searchController.text.toLowerCase()))
-            .toList();
-      }
+      _applyFilters();
     });
     _updateOverlay();
   }
 
+  void _applyFilters() {
+    List<String> baseItems = widget.dropdownItems;
+    
+    // Get items of selected category, so they can be filtered.
+    if (widget.categories != null && _selectedCategory != null) {
+      final category = widget.categories!.firstWhere(
+        (cat) => cat.name == _selectedCategory,
+        orElse: () => DropdownCategory(name: 'All', items: widget.dropdownItems),
+      );
+      baseItems = category.items;
+    }
+    
+    // Apply search filter
+    if (_searchController.text.isEmpty) {
+      _filteredItems = baseItems;
+    } else {
+      _filteredItems = baseItems
+          .where((item) =>
+              item.toLowerCase().contains(_searchController.text.toLowerCase()))
+          .toList();
+    }
+  }
+
   void _onFocusChanged() {
     if (_focusNode.hasFocus) {
-      _searchController.clear(); // Clear text when opening
-      _filteredItems = widget.dropdownItems; // Show all items initially
+      _searchController.clear();
+      _selectedCategory = null;
+      _applyFilters();
       _showOverlay();
     } else {
       _hideOverlay();
@@ -118,8 +155,16 @@ class _SearchableDropdownState extends State<SearchableDropdown>
     }
   }
 
+  void _onCategoryChanged(String? category) {
+    setState(() {
+      _selectedCategory = category;
+      _applyFilters();
+    });
+    _updateOverlay();
+  }
+
+  /// If the current text is not a valid option, reset to the current value or clear
   void _validateAndResetText() {
-    // If the current text is not a valid option, reset to the current value or clear
     if (!widget.dropdownItems.contains(_searchController.text)) {
       if (widget.value != null && widget.dropdownItems.contains(widget.value!)) {
         _searchController.text = widget.value!;
@@ -184,15 +229,16 @@ class _SearchableDropdownState extends State<SearchableDropdown>
                 top: offset.dy + size.height,
                 width: size.width,
                 child: GestureDetector(
-                  onTap: () {
-                    // Prevent closing when tapping on the dropdown itself
-                  },
+                  onTap: () {},
                   child: DropdownOverlay(
                     filteredItems: _filteredItems,
                     selectedValue: widget.value,
                     onItemSelected: _selectItem,
                     onOutsideTap: () => _focusNode.unfocus(),
                     heightAnimation: _heightAnimation,
+                    categories: widget.categories,
+                    selectedCategory: _selectedCategory,
+                    onCategoryChanged: _onCategoryChanged,
                   ),
                 ),
               ),
