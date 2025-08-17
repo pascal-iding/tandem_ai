@@ -40,8 +40,8 @@ class _MainAppState extends State<MainApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        Locale('en'), // English
-        Locale('de'), // German
+        Locale('en'),
+        Locale('de'),
       ],
     );
   }
