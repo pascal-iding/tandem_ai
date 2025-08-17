@@ -4,8 +4,6 @@
 TandemAi helps you improve your language skills by chatting with an AI partner.  
 Choose your **language**, **topic**, and **proficiency level**, and start practicing in a natural, interactive way. The ai chat partner will show mistakes.
 
----
-
 ## Features
 
 - **AI Chat Partner** – Practice real conversations in multiple languages.  
@@ -15,8 +13,6 @@ Choose your **language**, **topic**, and **proficiency level**, and start practi
 - **API Key Management** – User-provided API key required for AI access.  
 - **Multilingual Interface** – Currently available in **English** and **German**.  
 
----
-
 ## Tech Stack
 
 - **Flutter** – Cross-platform UI framework  
@@ -24,8 +20,6 @@ Choose your **language**, **topic**, and **proficiency level**, and start practi
 - **GoRouter** – Navigation  
 - **Feature-Driven Architecture** – Clean separation of features  
 - **L10n** – Built-in localization support  
-
----
 
 ## Architecture Overview
 Feature-Driven Design – Each feature (Chat, Profile, About) is self-contained.
