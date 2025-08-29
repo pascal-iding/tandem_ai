@@ -4,6 +4,13 @@
 TandemAi helps you improve your language skills by chatting with an AI partner.  
 Choose your **language**, **topic**, and **proficiency level**, and start practicing in a natural, interactive way. The ai chat partner will show mistakes.
 
+## Design
+
+| | |
+|:---:|:---:|
+| ![UI Screenshot 1](docs/ui1.jpg) | ![UI Screenshot 2](docs/ui_2.jpg) |
+
+
 ## Features
 
 - **AI Chat Partner** – Practice real conversations in multiple languages.  
